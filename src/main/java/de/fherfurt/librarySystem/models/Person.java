@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Person {
+public class Person implements Comparable<Person> {
     private static int idCounter=0;
     private final int id;
     private String firstName;
@@ -109,5 +109,10 @@ public class Person {
     @Override
     public String toString() {
         return String.format("%s, %s (%s), %s, %s, %.2f", firstName, lastName, birthDate, address, borrowedBooks, openFees);
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        return Integer.compare(this.id, o.id);
     }
 }
