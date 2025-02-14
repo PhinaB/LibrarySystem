@@ -80,6 +80,18 @@ public class Person {
         this.openFees = openFees;
     }
 
+    public double addFee(double newFee){
+        return this.openFees + newFee;
+    }
+
+    public void SetNewBorrowedBook (Book book){
+        this.borrowedBooks.add(book);
+    }
+
+    public void RemoveBorrowedBook(Book book){
+        //TODO
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,7 +100,6 @@ public class Person {
         // id- Prüfung reicht eigentlich
         return id == person.id && Double.compare(openFees, person.openFees) == 0 && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(birthDate, person.birthDate) && Objects.equals(address, person.address) && Objects.equals(borrowedBooks, person.borrowedBooks);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, birthDate, address, borrowedBooks, openFees);
