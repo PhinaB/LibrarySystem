@@ -81,7 +81,8 @@ public class Person {
     }
 
     public double addFee(double newFee){
-        return this.openFees + newFee;
+        this.openFees += newFee;
+        return this.openFees;
     }
 
     public void SetNewBorrowedBook (Book book){
@@ -89,7 +90,7 @@ public class Person {
     }
 
     public void RemoveBorrowedBook(Book book){
-        //TODO
+        this.borrowedBooks.remove(book);
     }
 
     @Override
