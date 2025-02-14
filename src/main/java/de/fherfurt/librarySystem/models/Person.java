@@ -68,10 +68,6 @@ public class Person implements Comparable<Person> {
         return borrowedBooks;
     }
 
-    public void setBorrowedBooks(ArrayList<Book> borrowedBooks) {
-        this.borrowedBooks = borrowedBooks;
-    }
-
     public double getOpenFees() {
         return openFees;
     }
@@ -85,7 +81,7 @@ public class Person implements Comparable<Person> {
         return this.openFees;
     }
 
-    public void SetNewBorrowedBook (Book book){
+    public void addNewBorrowedBook (Book book){
         this.borrowedBooks.add(book);
     }
 
@@ -108,7 +104,18 @@ public class Person implements Comparable<Person> {
 
     @Override
     public String toString() {
-        return String.format("%s, %s (%s), %s, %s, %.2f", firstName, lastName, birthDate, address, borrowedBooks, openFees);
+        return String.format(
+                "Person Details:\n" +
+                "Name (Date of Birth): %s, %s (%s)\n" +
+                "Address: %s\n" +
+                "Borrowed Books: %s\n" +
+                "Open Fees: %.2f",
+                firstName,
+                lastName,
+                birthDate,
+                address != null ? address.toString() : "No address registered.",
+                borrowedBooks != null ? borrowedBooks.toString() : "No borrowed books.",
+                openFees);
     }
 
     @Override
