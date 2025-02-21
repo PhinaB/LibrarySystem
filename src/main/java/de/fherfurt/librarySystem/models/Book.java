@@ -15,6 +15,7 @@ public class Book implements Comparable<Book> {
     private Person personBorrowed;
     private LocalDate borrowDate;
     static final double feeForOneWeek = 5.00;
+    static final double feeForDamagedBook = 10.00;
 
     public Book(String title, String author, String genre, boolean isDamaged) {
         this.title = title;
@@ -49,12 +50,16 @@ public class Book implements Comparable<Book> {
         return Optional.ofNullable(personBorrowed);
     }
 
-    public LocalDate getBorrowDate() {
-        return borrowDate;
+    public Optional<LocalDate> getBorrowDate() {
+        return Optional.ofNullable(borrowDate);
     }
 
     public static double getFeeForOneWeek() {
         return feeForOneWeek;
+    }
+
+    public static double getFeeForDamagedBook() {
+        return feeForDamagedBook;
     }
 
     public void setTitle(String title) {

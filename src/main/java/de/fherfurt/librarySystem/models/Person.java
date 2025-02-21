@@ -11,7 +11,7 @@ public class Person implements Comparable<Person> {
     private String lastName;
     private LocalDate birthDate;
     private Address address;
-    private ArrayList<Book> borrowedBooks;
+    private final ArrayList<Book> borrowedBooks;
     private double openFees;
 
     public Person(String firstName, String lastName, LocalDate birthDate, Address address) {
@@ -58,7 +58,7 @@ public class Person implements Comparable<Person> {
 
     public Address getAddress() {
         return address;
-    }
+    } // TODO: optional nutzen, falls Person.address = null
 
     public void setAddress(Address address) {
         this.address = address;
@@ -72,20 +72,19 @@ public class Person implements Comparable<Person> {
         return openFees;
     }
 
-    public void setOpenFees(double openFees) {
+    private void setOpenFees(double openFees) {
         this.openFees = openFees;
     }
 
-    public double addFee(double newFee){
+    public void addFee(double newFee){
         this.openFees += newFee;
-        return this.openFees;
     }
 
-    public void addNewBorrowedBook (Book book){
+    public void addNewBorrowedBook(Book book){
         this.borrowedBooks.add(book);
     }
 
-    public void RemoveBorrowedBook(Book book){
+    public void removeBorrowedBook(Book book){
         this.borrowedBooks.remove(book);
     }
 
@@ -97,6 +96,7 @@ public class Person implements Comparable<Person> {
         // id- Prüfung reicht eigentlich
         return id == person.id && Double.compare(openFees, person.openFees) == 0 && Objects.equals(firstName, person.firstName) && Objects.equals(lastName, person.lastName) && Objects.equals(birthDate, person.birthDate) && Objects.equals(address, person.address) && Objects.equals(borrowedBooks, person.borrowedBooks);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, birthDate, address, borrowedBooks, openFees);
@@ -106,10 +106,10 @@ public class Person implements Comparable<Person> {
     public String toString() {
         return String.format(
                 "Person Details:\n" +
-                "Name (Date of Birth): %s, %s (%s)\n" +
-                "Address: %s\n" +
-                "Borrowed Books: %s\n" +
-                "Open Fees: %.2f",
+                " Name (Date of Birth): %s, %s (%s)\n" +
+                " Address: %s\n" + // TODO: soll das auch englisch sein?
+                " Borrowed Books: %s\n" +
+                " Open Fees: %.2f",
                 firstName,
                 lastName,
                 birthDate,
