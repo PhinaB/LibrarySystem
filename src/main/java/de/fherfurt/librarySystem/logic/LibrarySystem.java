@@ -1,19 +1,74 @@
 package de.fherfurt.librarySystem.logic;
 
+import de.fherfurt.librarySystem.models.Address;
 import de.fherfurt.librarySystem.models.Book;
 import de.fherfurt.librarySystem.models.Person;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.*;
 
 public class LibrarySystem {
     private Map<Integer, Integer> borrowBookPersons;
     private List<Person> persons;
     private List<Book> books;
 
-    public LibrarySystem () {}
+    public LibrarySystem () {
+        this.borrowBookPersons = new HashMap<>();
+        this.persons = new ArrayList<>();
+        this.books = new ArrayList<>();
+    }
+
+    public Person addPerson(Person person) {
+        persons.add(person);
+        return person;
+    }
+
+    /*public void editPerson (Person newPerson){
+        for(Person person : persons){
+            if(person.getId() == newPerson.getId()){
+                person.setFirstName(newPerson.getFirstName());
+                person.setLastName(newPerson.getLastName());
+                person.setBirthDate(newPerson.getBirthDate());
+                if(newPerson.getAddress() != null){
+                person.setAddress(newPerson.getAddress)
+                }
+            TODO: borrowedBooks-Liste
+            TODO: Was machen mit openFee?
+            }
+        }
+    }*/
+
+    public void editPerson(int personId, String firstName, String lastName, LocalDate birthDate, Address address, List<Book> borrowedBooks) {
+        for (Person person : persons) {
+            if(person.getId() == personId) {
+                if(firstName != null) {
+                    person.setFirstName(firstName);
+                }
+                if(lastName != null) {
+                    person.setLastName(lastName);
+                }
+                if(birthDate != null) {
+                    person.setBirthDate(birthDate);
+                }
+                if(address != null) {
+                    person.setAddress(address);
+                }
+                if(borrowedBooks != null) {
+                    person.setBorrowedBooks(new ArrayList<Book>(borrowedBooks));
+                }
+            }
+        }
+    }
+
+    public void deletePerson (Person person) {
+        persons.remove(person);
+        //TODO: Löschen aus der Map, oder Prüfen, ob noch Bücher ausgeliehen, erst wenn keine Bücher mehr ausgeliehen hat kann löschen
+    }
 
     public boolean borrowBook(Book book, Person person) {
         if (borrowBookPersons.containsValue(book.getId())) {
@@ -53,6 +108,16 @@ public class LibrarySystem {
         fee += weeksLate * Book.getFeeForOneWeek();
 
         return fee;
+    }
+
+    public List<Person> filterPersons(PersonFilter personFilter) {
+        return persons.stream()
+                .filter(person ->personFilter.getMinOpenFees() == 0.0 || person.getOpenFees() >= personFilter.getMinOpenFees())
+                .filter(person -> personFilter.getMaxOpenFees() == 0.0 || person.getOpenFees() <= personFilter.getMaxOpenFees())
+                .filter(person -> personFilter.getMinBooksBorrowed() == 0 || person.countBorrowedBooks() >= personFilter.getMinBooksBorrowed())
+                .filter(person -> personFilter.getMaxBooksBorrowed() == 0 || person.countBorrowedBooks() <= personFilter.getMaxBooksBorrowed())
+                .filter(person -> personFilter.getBooks() == null || person.getBorrowedBooks().map(books -> books.stream().anyMatch(book-> personFilter.getBooks().contains(book))).orElse(false))
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -2,7 +2,9 @@ package de.fherfurt.librarySystem.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Person implements Comparable<Person> {
     private static int idCounter=0;
@@ -11,7 +13,7 @@ public class Person implements Comparable<Person> {
     private String lastName;
     private LocalDate birthDate;
     private Address address;
-    private final ArrayList<Book> borrowedBooks;
+    private final List<Book> borrowedBooks;
     private double openFees;
 
     public Person(String firstName, String lastName, LocalDate birthDate, Address address) {
@@ -21,7 +23,7 @@ public class Person implements Comparable<Person> {
         this.birthDate = birthDate;
         this.address = address;
         this.borrowedBooks = new ArrayList<>();
-        this.openFees = 0.0;
+        this.openFees = 1.0;
     }
 
     public Person(String firstName, String lastName, LocalDate birthDate){
@@ -56,16 +58,24 @@ public class Person implements Comparable<Person> {
         this.birthDate = birthDate;
     }
 
-    public Address getAddress() {
-        return address;
-    } // TODO: optional nutzen, falls Person.address = null
+    public Optional<Address> getAddress() {
+        return Optional.ofNullable(address);
+    }
 
     public void setAddress(Address address) {
         this.address = address;
     }
 
-    public ArrayList<Book> getBorrowedBooks() {
-        return borrowedBooks;
+    public Optional<List<Book>> getBorrowedBooks() {
+        return Optional.ofNullable(borrowedBooks);
+    }
+
+    //TODO: Bücher werden glöscht und neue Liste hinzugefügt-> so gewollt? benötigt für die editPerson
+    public void setBorrowedBooks(List<Book> borrowedBooks) {
+        if (borrowedBooks != null) {
+            this.borrowedBooks.clear();
+            this.borrowedBooks.addAll(borrowedBooks);
+        }
     }
 
     public double getOpenFees() {
@@ -81,12 +91,16 @@ public class Person implements Comparable<Person> {
     }
 
     public void addNewBorrowedBook(Book book){
-        this.borrowedBooks.add(book);
+        if (!this.borrowedBooks.contains(book)) {
+            this.borrowedBooks.add(book);
+        }
     }
 
     public void removeBorrowedBook(Book book){
         this.borrowedBooks.remove(book);
     }
+
+    public int countBorrowedBooks() {return borrowedBooks == null ? 0 : borrowedBooks.size();}
 
     @Override
     public boolean equals(Object o) {
