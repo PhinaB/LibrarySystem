@@ -91,12 +91,15 @@ public class Person implements Comparable<Person> {
     }
 
     public void addNewBorrowedBook(Book book){
+        // TODO übergebenes Buch könnte null sein
         if (!this.borrowedBooks.contains(book)) {
             this.borrowedBooks.add(book);
         }
     }
 
     public void removeBorrowedBook(Book book){
+        // TODO: Bücher können nur entfernt werden, wenn sie vorher in der ArrayList waren -> Fehler muss abgefangen werden
+        // TODO übergebenes Buch könnte null sein
         this.borrowedBooks.remove(book);
     }
 
