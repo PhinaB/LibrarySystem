@@ -23,7 +23,15 @@ public class LibrarySystem {
         this.books = new ArrayList<>();
     }
 
-    public Person addBook(Book book) {
+    public List<Person> getPersons() {
+        return persons;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public Book addBook(Book book) {
         // TODO Lucas
         return book;
     }
