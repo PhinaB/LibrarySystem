@@ -123,7 +123,7 @@ public class LibrarySystem {
                     .filter(person -> personFilter.getMaxOpenFees() == 0.0 || person.getOpenFees() <= personFilter.getMaxOpenFees())
                     .filter(person -> personFilter.getMinBooksBorrowed() == 0 || person.countBorrowedBooks() >= personFilter.getMinBooksBorrowed())
                     .filter(person -> personFilter.getMaxBooksBorrowed() == 0 || person.countBorrowedBooks() <= personFilter.getMaxBooksBorrowed())
-                    .filter(person -> personFilter.getBooks() == null || person.getBorrowedBooks().map(books -> books.stream().anyMatch(book -> personFilter.getBooks().contains(book))).orElse(false))
+                    .filter(person -> personFilter.getBooks() == null || person.getBorrowedBooks().stream().anyMatch(book -> personFilter.getBooks().contains(book)))
                     .collect(Collectors.toList());
         }
     }
