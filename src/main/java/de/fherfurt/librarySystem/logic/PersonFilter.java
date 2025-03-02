@@ -64,4 +64,12 @@ public class PersonFilter {
     public void setMaxBooksBorrowed(int maxBooksBorrowed) {
         this.maxBooksBorrowed = maxBooksBorrowed;
     }
+
+    public boolean hasFilter(){
+        return (books != null && !books.isEmpty()) ||
+                minOpenFees > 0.0 ||
+                maxOpenFees > 0.0 ||
+                minBooksBorrowed > 0 ||
+                maxBooksBorrowed > 0;
+    }
 }
