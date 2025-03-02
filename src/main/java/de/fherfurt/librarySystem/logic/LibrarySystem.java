@@ -123,9 +123,9 @@ public class LibrarySystem {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("LibrarySystem{")
-                .append("borrowBookPersons=").append(borrowBookPersons)
-                .append(", persons=[");
+        sb.append("Buchverleih System {")
+                .append("ausgeliehene Bücher pro Person =").append(borrowBookPersons)
+                .append(", Personen =[");
 
         for (Person person : persons) {
             sb.append(person.toString()).append(", ");
@@ -135,7 +135,7 @@ public class LibrarySystem {
             sb.setLength(sb.length() - 2);
         }
 
-        sb.append("], books=[");
+        sb.append("], Bücher =[");
         for (Book book : books) {
             sb.append(book.toString()).append(", ");
         }
