@@ -78,7 +78,13 @@ public class LibrarySystem {
             return false;
         }
 
-        person.addNewBorrowedBook(book); // TODO Exception fangen, die Phina noch eingebaut hat
+        try {
+            person.addNewBorrowedBook(book);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Es ist ein Fehler aufgetreten: "+e.getMessage()); // TODO: reicht das so? Oder in Logger schreiben?? Auch bei gaveBookBack
+            return false;
+        }
+
         book.setBorrow(person);
         borrowBookPersons.put(person.getId(), book.getId());
         return true;
@@ -86,7 +92,13 @@ public class LibrarySystem {
 
     public boolean gaveBookBack(Book book, Person person, boolean isNowDamaged) {
         if (borrowBookPersons.containsKey(person.getId()) && borrowBookPersons.get(person.getId()).equals(book.getId())) {
-            person.removeBorrowedBook(book);
+            try {
+                person.removeBorrowedBook(book);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Es ist ein Fehler aufgetreten: "+e.getMessage());
+                return false;
+            }
+
             book.removeBorrow();
             double newFee = this.calculateFeeForBook(book, isNowDamaged);
             person.addFee(newFee);
