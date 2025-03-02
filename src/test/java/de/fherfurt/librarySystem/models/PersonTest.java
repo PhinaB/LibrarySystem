@@ -12,14 +12,12 @@ class PersonTest {
     private Person person;
     private Book book1;
     private Book book2;
-    private Book book3;
 
     @BeforeEach
     void setUp() {
         person = new Person("Anna", "Test", LocalDate.of(2000, 1, 1));
         book1 = new Book("Test", "Autor Test", "Bestes Genre", false);
         book2 = new Book("Test", "Autor Test", "Bestes Genre", false);
-        book3 = new Book("Test", "Autor Test", "Bestes Genre", false);
     }
 
     @AfterEach
@@ -27,7 +25,6 @@ class PersonTest {
         person = null;
         book1 = null;
         book2 = null;
-        book3 = null;
     }
 
     @Test
