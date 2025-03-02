@@ -32,7 +32,7 @@ public class LibrarySystem {
     }
 
     public Book addBook(Book book) {
-        // TODO Lucas
+        books.add(book);
         return book;
     }
 
@@ -56,13 +56,13 @@ public class LibrarySystem {
         }
     }*/
 
-    public void editPerson(int personId, String firstName, String lastName, LocalDate birthDate, Address address, List<Book> borrowedBooks) {
+    public void editPerson(int personId, String firstName, String lastName, LocalDate birthDate, Address address) {
         for (Person person : persons) {
             if(person.getId() == personId) {
-                if(firstName != null) {
+                if(firstName != null && !firstName.isBlank()) {
                     person.setFirstName(firstName);
                 }
-                if(lastName != null) {
+                if(lastName != null && !lastName.isBlank()) {
                     person.setLastName(lastName);
                 }
                 if(birthDate != null) {
@@ -70,9 +70,6 @@ public class LibrarySystem {
                 }
                 if(address != null) {
                     person.setAddress(address);
-                }
-                if(borrowedBooks != null) {
-                    person.setBorrowedBooks(new ArrayList<Book>(borrowedBooks));
                 }
             }
         }
@@ -88,7 +85,7 @@ public class LibrarySystem {
             return false;
         }
 
-        person.addNewBorrowedBook(book);
+        person.addNewBorrowedBook(book); // TODO Exception fangen, die Phina noch eingebaut hat
         book.setBorrow(person);
         borrowBookPersons.put(person.getId(), book.getId());
         return true;
