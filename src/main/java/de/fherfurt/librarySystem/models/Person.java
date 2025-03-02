@@ -71,6 +71,7 @@ public class Person implements Comparable<Person> {
     }
 
     //TODO: Bücher werden glöscht und neue Liste hinzugefügt-> so gewollt? benötigt für die editPerson
+    // TODO: evtl komplettt löschen? Da wir Bücher mit add und remove entfernen und hinzufügen
     public void setBorrowedBooks(List<Book> borrowedBooks) {
         if (borrowedBooks != null) {
             this.borrowedBooks.clear();
@@ -91,7 +92,7 @@ public class Person implements Comparable<Person> {
     }
 
     public void addNewBorrowedBook(Book book){
-        // TODO übergebenes Buch könnte null sein
+        // TODO übergebenes Buch könnte null sein -> IllegalArgumentException
         if (!this.borrowedBooks.contains(book)) {
             this.borrowedBooks.add(book);
         }
@@ -99,10 +100,11 @@ public class Person implements Comparable<Person> {
 
     public void removeBorrowedBook(Book book){
         // TODO: Bücher können nur entfernt werden, wenn sie vorher in der ArrayList waren -> Fehler muss abgefangen werden
-        // TODO übergebenes Buch könnte null sein
+        // TODO übergebenes Buch könnte null sein -> IllegalArgumentException
         this.borrowedBooks.remove(book);
     }
 
+    // TODO: Die Prüfung borrowedBooks == null ist unnötig, da borrowedBooks eine final List ist und im Konstruktor initialisiert wird. Es kann also nie null sein.
     public int countBorrowedBooks() {return borrowedBooks == null ? 0 : borrowedBooks.size();}
 
     @Override
@@ -124,7 +126,7 @@ public class Person implements Comparable<Person> {
         return String.format(
                 "Person Details:\n" +
                 " Name (Date of Birth): %s, %s (%s)\n" +
-                " Address: %s\n" + // TODO: soll das auch englisch sein?
+                " Address: %s\n" + // TODO: deutsch
                 " Borrowed Books: %s\n" +
                 " Open Fees: %.2f",
                 firstName,
