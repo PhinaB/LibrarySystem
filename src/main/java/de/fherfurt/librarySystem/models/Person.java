@@ -23,7 +23,7 @@ public class Person implements Comparable<Person> {
         this.birthDate = birthDate;
         this.address = address;
         this.borrowedBooks = new ArrayList<>();
-        this.openFees = 1.0;
+        this.openFees = 0.0;
     }
 
     public Person(String firstName, String lastName, LocalDate birthDate){
@@ -70,15 +70,6 @@ public class Person implements Comparable<Person> {
         return Optional.ofNullable(borrowedBooks);
     }
 
-    //TODO: Bücher werden glöscht und neue Liste hinzugefügt-> so gewollt? benötigt für die editPerson
-    // TODO: evtl komplettt löschen? Da wir Bücher mit add und remove entfernen und hinzufügen
-    public void setBorrowedBooks(List<Book> borrowedBooks) {
-        if (borrowedBooks != null) {
-            this.borrowedBooks.clear();
-            this.borrowedBooks.addAll(borrowedBooks);
-        }
-    }
-
     public double getOpenFees() {
         return openFees;
     }
@@ -92,20 +83,25 @@ public class Person implements Comparable<Person> {
     }
 
     public void addNewBorrowedBook(Book book){
-        // TODO übergebenes Buch könnte null sein -> IllegalArgumentException
+        if (book == null){
+            throw new IllegalArgumentException("Das übergebene Buch darf nicht null sein!");
+        }
         if (!this.borrowedBooks.contains(book)) {
             this.borrowedBooks.add(book);
         }
     }
 
     public void removeBorrowedBook(Book book){
-        // TODO: Bücher können nur entfernt werden, wenn sie vorher in der ArrayList waren -> Fehler muss abgefangen werden
-        // TODO übergebenes Buch könnte null sein -> IllegalArgumentException
+        if (book == null){
+            throw new IllegalArgumentException("Das übergebene Buch darf nicht null sein!");
+        }
+        if(!this.borrowedBooks.contains(book)){
+            System.out.println("Das Buch ist nicht in der Liste der ausgeliehnen Bücher der Person und kann nicht entfert werden.")
+        }
         this.borrowedBooks.remove(book);
     }
 
-    // TODO: Die Prüfung borrowedBooks == null ist unnötig, da borrowedBooks eine final List ist und im Konstruktor initialisiert wird. Es kann also nie null sein.
-    public int countBorrowedBooks() {return borrowedBooks == null ? 0 : borrowedBooks.size();}
+    public int countBorrowedBooks() {return borrowedBooks.size();}
 
     @Override
     public boolean equals(Object o) {
@@ -124,16 +120,16 @@ public class Person implements Comparable<Person> {
     @Override
     public String toString() {
         return String.format(
-                "Person Details:\n" +
-                " Name (Date of Birth): %s, %s (%s)\n" +
-                " Address: %s\n" + // TODO: deutsch
-                " Borrowed Books: %s\n" +
-                " Open Fees: %.2f",
+                "Personendetails:\n" +
+                " Name (Geburtsdatum): %s, %s (%s)\n" +
+                " Adresse: %s\n" +
+                " Ausgeliehne Bücher: %s\n" +
+                " Offene Gebühren: %.2f",
                 firstName,
                 lastName,
                 birthDate,
-                address != null ? address.toString() : "No address registered.",
-                borrowedBooks != null ? borrowedBooks.toString() : "No borrowed books.",
+                address != null ? address.toString() : "Keine Adresse registriert.",
+                borrowedBooks != null ? borrowedBooks.toString() : "Keine Bücher ausgeliehen.",
                 openFees);
     }
 

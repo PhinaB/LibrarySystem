@@ -41,21 +41,6 @@ public class LibrarySystem {
         return person;
     }
 
-    /*public void editPerson (Person newPerson){
-        for(Person person : persons){
-            if(person.getId() == newPerson.getId()){
-                person.setFirstName(newPerson.getFirstName());
-                person.setLastName(newPerson.getLastName());
-                person.setBirthDate(newPerson.getBirthDate());
-                if(newPerson.getAddress() != null){
-                person.setAddress(newPerson.getAddress)
-                }
-            TODO: borrowedBooks-Liste
-            TODO: Was machen mit openFee?
-            }
-        }
-    }*/
-
     public void editPerson(int personId, String firstName, String lastName, LocalDate birthDate, Address address) {
         for (Person person : persons) {
             if(person.getId() == personId) {
@@ -76,8 +61,16 @@ public class LibrarySystem {
     }
 
     public void deletePerson (Person person) {
+        int personId = person.getId();
+        if(borrowBookPersons.containsValue(personId)) {
+            System.out.println("Person mit Id" + personId + "kann nicht gelöscht werden, da noch folgende Bücher ausgeliehen sind: " + person.getBorrowedBooks().toString());
+            return;
+        }
+        if(person.getOpenFees() > 0){
+            System.out.println("Person mit Id" + personId + "kann nicht gelöscht werden, da noch folgende Gebühren offen sind: " + person.getOpenFees());
+            return;
+        }
         persons.remove(person);
-        //TODO: Löschen aus der Map, oder Prüfen, ob noch Bücher ausgeliehen, erst wenn keine Bücher mehr ausgeliehen hat kann löschen
     }
 
     public boolean borrowBook(Book book, Person person) {
@@ -121,13 +114,18 @@ public class LibrarySystem {
     }
 
     public List<Person> filterPersons(PersonFilter personFilter) {
-        return persons.stream()
-                .filter(person ->personFilter.getMinOpenFees() == 0.0 || person.getOpenFees() >= personFilter.getMinOpenFees())
-                .filter(person -> personFilter.getMaxOpenFees() == 0.0 || person.getOpenFees() <= personFilter.getMaxOpenFees())
-                .filter(person -> personFilter.getMinBooksBorrowed() == 0 || person.countBorrowedBooks() >= personFilter.getMinBooksBorrowed())
-                .filter(person -> personFilter.getMaxBooksBorrowed() == 0 || person.countBorrowedBooks() <= personFilter.getMaxBooksBorrowed())
-                .filter(person -> personFilter.getBooks() == null || person.getBorrowedBooks().map(books -> books.stream().anyMatch(book-> personFilter.getBooks().contains(book))).orElse(false))
-                .collect(Collectors.toList());
+        if(!personFilter.hasFilter()){
+            return persons;
+        }
+        else {
+            return persons.stream()
+                    .filter(person -> personFilter.getMinOpenFees() == 0.0 || person.getOpenFees() >= personFilter.getMinOpenFees())
+                    .filter(person -> personFilter.getMaxOpenFees() == 0.0 || person.getOpenFees() <= personFilter.getMaxOpenFees())
+                    .filter(person -> personFilter.getMinBooksBorrowed() == 0 || person.countBorrowedBooks() >= personFilter.getMinBooksBorrowed())
+                    .filter(person -> personFilter.getMaxBooksBorrowed() == 0 || person.countBorrowedBooks() <= personFilter.getMaxBooksBorrowed())
+                    .filter(person -> personFilter.getBooks() == null || person.getBorrowedBooks().map(books -> books.stream().anyMatch(book -> personFilter.getBooks().contains(book))).orElse(false))
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override
