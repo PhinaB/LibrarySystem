@@ -66,8 +66,8 @@ public class Person implements Comparable<Person> {
         this.address = address;
     }
 
-    public Optional<List<Book>> getBorrowedBooks() {
-        return Optional.ofNullable(borrowedBooks);
+    public List<Book> getBorrowedBooks() {
+        return this.borrowedBooks;
     }
 
     public double getOpenFees() {
@@ -83,7 +83,7 @@ public class Person implements Comparable<Person> {
     }
 
     public void addNewBorrowedBook(Book book){
-        if (book == null){
+        if (book == null) {
             throw new IllegalArgumentException("Das übergebene Buch darf nicht null sein!");
         }
         if (!this.borrowedBooks.contains(book)) {
@@ -92,16 +92,18 @@ public class Person implements Comparable<Person> {
     }
 
     public void removeBorrowedBook(Book book){
-        if (book == null){
+        if (book == null) {
             throw new IllegalArgumentException("Das übergebene Buch darf nicht null sein!");
         }
         if(!this.borrowedBooks.contains(book)){
-            System.out.println("Das Buch ist nicht in der Liste der ausgeliehnen Bücher der Person und kann nicht entfert werden.")
+            System.out.println("Das Buch ist nicht in der Liste der ausgeliehen Bücher der Person und kann nicht entfernt werden.");
         }
         this.borrowedBooks.remove(book);
     }
 
-    public int countBorrowedBooks() {return borrowedBooks.size();}
+    public int countBorrowedBooks() {
+        return borrowedBooks.size();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -123,7 +125,7 @@ public class Person implements Comparable<Person> {
                 "Personendetails:\n" +
                 " Name (Geburtsdatum): %s, %s (%s)\n" +
                 " Adresse: %s\n" +
-                " Ausgeliehne Bücher: %s\n" +
+                " Ausgeliehene Bücher: %s\n" +
                 " Offene Gebühren: %.2f",
                 firstName,
                 lastName,

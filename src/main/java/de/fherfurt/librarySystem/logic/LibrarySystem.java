@@ -32,7 +32,7 @@ public class LibrarySystem {
     }
 
     public Book addBook(Book book) {
-        // TODO Lucas
+        books.add(book);
         return book;
     }
 
@@ -61,10 +61,10 @@ public class LibrarySystem {
     public void editPerson(int personId, String firstName, String lastName, LocalDate birthDate, Address address) {
         for (Person person : persons) {
             if(person.getId() == personId) {
-                if(firstName != null) {
+                if(firstName != null && !firstName.isBlank()) {
                     person.setFirstName(firstName);
                 }
-                if(lastName != null) {
+                if(lastName != null && !lastName.isBlank()) {
                     person.setLastName(lastName);
                 }
                 if(birthDate != null) {
@@ -98,7 +98,13 @@ public class LibrarySystem {
             return false;
         }
 
-        person.addNewBorrowedBook(book);
+        try {
+            person.addNewBorrowedBook(book);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Es ist ein Fehler aufgetreten: "+e.getMessage()); // TODO: reicht das so? Oder in Logger schreiben?? Auch bei gaveBookBack
+            return false;
+        }
+
         book.setBorrow(person);
         borrowBookPersons.put(person.getId(), book.getId());
         return true;
@@ -106,7 +112,13 @@ public class LibrarySystem {
 
     public boolean gaveBookBack(Book book, Person person, boolean isNowDamaged) {
         if (borrowBookPersons.containsKey(person.getId()) && borrowBookPersons.get(person.getId()).equals(book.getId())) {
-            person.removeBorrowedBook(book);
+            try {
+                person.removeBorrowedBook(book);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Es ist ein Fehler aufgetreten: "+e.getMessage());
+                return false;
+            }
+
             book.removeBorrow();
             double newFee = this.calculateFeeForBook(book, isNowDamaged);
             person.addFee(newFee);
@@ -143,7 +155,7 @@ public class LibrarySystem {
                     .filter(person -> personFilter.getMaxOpenFees() == 0.0 || person.getOpenFees() <= personFilter.getMaxOpenFees())
                     .filter(person -> personFilter.getMinBooksBorrowed() == 0 || person.countBorrowedBooks() >= personFilter.getMinBooksBorrowed())
                     .filter(person -> personFilter.getMaxBooksBorrowed() == 0 || person.countBorrowedBooks() <= personFilter.getMaxBooksBorrowed())
-                    .filter(person -> personFilter.getBooks() == null || person.getBorrowedBooks().map(books -> books.stream().anyMatch(book -> personFilter.getBooks().contains(book))).orElse(false))
+                    .filter(person -> personFilter.getBooks() == null || person.getBorrowedBooks().stream().anyMatch(book -> personFilter.getBooks().contains(book)))
                     .collect(Collectors.toList());
         }
     }
