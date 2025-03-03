@@ -23,6 +23,7 @@ class BookFilterTest {
         assertFalse(resultHasFilter, "No filter should be set.");
     }
 
+    @Test
     void testHasFilterWithGenre() {
         //Arrange
         bookFilter.setGenre("Genre");

@@ -373,6 +373,7 @@ class LibrarySystemTest {
         Book book2 = librarySystem.getBooks().get(1);
         Book book3 = librarySystem.getBooks().get(2);
         Book book4 = new Book("Titel4", "Author4", "Testgenre1", false);
+        librarySystem.addBook(book4);
         // Act
         BookFilter bookFilter = new BookFilter();
         bookFilter.setGenre(book1.getGenre());
@@ -393,6 +394,7 @@ class LibrarySystemTest {
         Book book2 = librarySystem.getBooks().get(1);
         Book book3 = librarySystem.getBooks().get(2);
         Book book4 = new Book("Title4", "Autor Test2", "Genre4", false);
+        librarySystem.addBook(book4);
         // Act
         BookFilter bookFilter = new BookFilter();
         bookFilter.setAuthor(book2.getAuthor());
