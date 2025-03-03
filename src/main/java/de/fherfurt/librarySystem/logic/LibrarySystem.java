@@ -37,6 +37,14 @@ public class LibrarySystem {
     }
 
     public Person addPerson(Person person) {
+        if(person==null){
+            System.out.println("Person darf nicht null sein.");
+            return null;
+        }
+        if(persons.contains(person)){
+            System.out.println("Person bereits vorhenden in der Liste.");
+            return null;
+        }
         persons.add(person);
         return person;
     }
@@ -61,6 +69,9 @@ public class LibrarySystem {
     }
 
     public void deletePerson (Person person) {
+        if(person == null){
+            System.out.println("Person darf nicht null sein.");
+        }
         int personId = person.getId();
         if(borrowBookPersons.containsValue(personId)) {
             System.out.println("Person mit Id" + personId + "kann nicht gelöscht werden, da noch folgende Bücher ausgeliehen sind: " + person.getBorrowedBooks().toString());
