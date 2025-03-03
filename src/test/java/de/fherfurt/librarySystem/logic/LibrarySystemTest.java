@@ -90,7 +90,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testEditBookWithNullValuesFilled(){
+    void testEditBookWithNullValuesFilled() {
         //Arrange
         Book book = librarySystem.getBooks().get(0);
         int bookId = book.getId();
@@ -107,8 +107,9 @@ class LibrarySystemTest {
         assertEquals("Autor Test1", book.getAuthor(), "Book should have same author as before.");
         assertEquals(newGenre, book.getGenre(), "Book should have new genre.");
     }
+
     @Test
-    void testEditBookWithAllNullValuesFilled(){
+    void testEditBookWithAllNullValuesFilled() {
         //Arrange
         Book book = librarySystem.getBooks().get(0);
         int bookId = book.getId();
@@ -123,8 +124,9 @@ class LibrarySystemTest {
         assertEquals("Testgenre1", book.getGenre(), "Book should have same genre as before.");
     }
 
-    @Test //TODO: eventuell nicht nötig?
-    void testEditBookNotExistingInList(){
+    @Test
+        //TODO: eventuell nicht nötig?
+    void testEditBookNotExistingInList() {
         //Arrange
         Book book = new Book("Title4", "Author4", "Genre4", false);
         int bookId = book.getId();
@@ -160,7 +162,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testDeleteBookFromEmptyList(){
+    void testDeleteBookFromEmptyList() {
         //Arrange
         librarySystem.getBooks().clear();
         Book book = new Book("Title1", "Author1", "Genre1", false);
@@ -177,7 +179,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testDeleteBookWhileStillBorrowed(){
+    void testDeleteBookWhileStillBorrowed() {
         //Arrange
         Book book = librarySystem.getBooks().get(0);
         Person person = librarySystem.getPersons().get(0);
@@ -235,7 +237,7 @@ class LibrarySystemTest {
     @Test
     void testEditPersonWithNullValues() {
         // Arrange
-        Person testPerson = new Person("Anna", "Beispiel", LocalDate.of(2000, 6, 10), new Address("Hauptstraße", 2,"11111", "Erfurt", "Deutschland"));
+        Person testPerson = new Person("Anna", "Beispiel", LocalDate.of(2000, 6, 10), new Address("Hauptstraße", 2, "11111", "Erfurt", "Deutschland"));
         librarySystem.addPerson(testPerson);
 
         int personId = testPerson.getId();
@@ -261,7 +263,7 @@ class LibrarySystemTest {
     @Test
     void testEditPersonWithAllNullValues() {
         // Arrange
-        Person testPerson = new Person("Alice", "Miller", LocalDate.of(1995, 5, 20), new Address("Hauptstraße", 2,"11111", "Erfurt", "Deutschland"));
+        Person testPerson = new Person("Alice", "Miller", LocalDate.of(1995, 5, 20), new Address("Hauptstraße", 2, "11111", "Erfurt", "Deutschland"));
         librarySystem.addPerson(testPerson);
 
         int personId = testPerson.getId();
@@ -336,20 +338,31 @@ class LibrarySystemTest {
     void testBorrowBook() {
         // TODO Lucas
         // Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person person = librarySystem.getPersons().get(0);
 
         // Act
+        boolean result = librarySystem.borrowBook(book, person);
 
         // Assert
+        assertTrue(result, "Buch sollte ausgeliehen sien");
+        assertTrue(book.isBorrowed(), "Buch Status sollte true sein.");
     }
 
     @Test
     void testGaveBookBack() {
         // TODO Lucas
         // Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person person = librarySystem.getPersons().get(0);
+        librarySystem.borrowBook(book, person); // Erst ausleihen
 
         // Act
+        boolean result = librarySystem.gaveBookBack(book, person);
 
         // Assert
+        assertTrue(result, "The book should be successfully returned.");
+        assertFalse(book.isBorrowed(), "The book's borrowed status should be false.");
     }
 
     @Test
@@ -467,7 +480,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testFilterBooksOnEmptyList(){
+    void testFilterBooksOnEmptyList() {
         //Arrange
         librarySystem.getBooks().clear();
         //Act
@@ -739,9 +752,16 @@ class LibrarySystemTest {
     void testCalculateFeeForBook() {
         // TODO Lucas
         // Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person person = librarySystem.getPersons().get(0);
+        librarySystem.borrowBook(book, person);
+
+        LocalDate dueDate = LocalDate.now().minusDays(10);
 
         // Act
+        double fee = librarySystem.calculateFeeForBook(book, dueDate);
 
         // Assert
+        assertEquals(10 * 0.50, fee, 0.01, "The fee should be 0.50 per day overdue.");
     }
 }

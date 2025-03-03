@@ -37,13 +37,29 @@ public class LibrarySystem {
     }
 
     public boolean editBook(int bookId, String title, String author, String genre){
-        //TODO Lucas
-        return true;
+        for (Book book : books) {
+            if (book.getId() == bookId) {
+                if (title != null && !title.isBlank()) {
+                    book.setTitle(title);
+                }
+                if (author != null && !author.isBlank()) {
+                    book.setAuthor(author);
+                }
+                if (genre != null && !genre.isBlank()) {
+                    book.setGenre(genre);
+                }
+                return true;
+            }
+        }
+        return false; // Buch mit der ID wurde nicht gefunden
     }
 
     public void deleteBook(Book book) {
-        //TODO Lucas
-    }
+        if (book == null) {
+            System.out.println("Das Buch darf nicht null sein.");
+            return;
+        }
+        }
 
     public Person addPerson(Person person) {
         if(person==null){
@@ -160,10 +176,18 @@ public class LibrarySystem {
         }
     }
 
-    public List<Book> filterBooks (BookFilter bookFilter){
-        //TODO Lucas
-        return null;
+    public List<Book> filterBooks(BookFilter bookFilter) {
+        if (bookFilter == null || !bookFilter.hasFilter()) {
+            return books;
+        }
+
+        return books.stream()
+                .filter(book -> bookFilter.getGenre() == null || book.getGenre().equalsIgnoreCase(bookFilter.getGenre()))
+                .filter(book -> bookFilter.getAuthor() == null || book.getAuthor().equalsIgnoreCase(bookFilter.getAuthor()))
+                .filter(book -> bookFilter.isDamaged() == null || book.isDamaged() == bookFilter.isDamaged())
+                .collect(Collectors.toList());
     }
+
 
     @Override
     public String toString() {
