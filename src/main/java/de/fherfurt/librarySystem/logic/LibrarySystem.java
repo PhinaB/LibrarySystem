@@ -32,6 +32,7 @@ public class LibrarySystem {
     }
 
     public Book addBook(Book book) {
+        //TODO: hier noch book auf null prüfen und schauen, ob es bereits in der Liste ist (siehe auch addPerson)
         books.add(book);
         return book;
     }
@@ -59,22 +60,22 @@ public class LibrarySystem {
             System.out.println("Das Buch darf nicht null sein.");
             return;
         }
-        }
+    }
 
     public Person addPerson(Person person) {
         if(person==null){
-            System.out.println("Person darf nicht null sein.");
+            System.out.println("Person is null.");
             return null;
         }
         if(persons.contains(person)){
-            System.out.println("Person bereits vorhenden in der Liste.");
+            System.out.println("Person is already in the list.");
             return null;
         }
         persons.add(person);
         return person;
     }
 
-    public void editPerson(int personId, String firstName, String lastName, LocalDate birthDate, Address address) {
+    public boolean editPerson(int personId, String firstName, String lastName, LocalDate birthDate, Address address) {
         for (Person person : persons) {
             if(person.getId() == personId) {
                 if(firstName != null && !firstName.isBlank()) {
@@ -89,21 +90,23 @@ public class LibrarySystem {
                 if(address != null) {
                     person.setAddress(address);
                 }
+                return true;
             }
         }
+        return false;
     }
 
     public void deletePerson (Person person) {
         if(person == null){
-            System.out.println("Person darf nicht null sein.");
+            System.out.println("Person is null.");
         }
         int personId = person.getId();
         if(borrowBookPersons.containsValue(personId)) {
-            System.out.println("Person mit Id" + personId + "kann nicht gelöscht werden, da noch folgende Bücher ausgeliehen sind: " + person.getBorrowedBooks().toString());
+            System.out.println("Person with the Id" + personId + "cannot be delete because following books are still borrowed: " + person.getBorrowedBooks().toString());
             return;
         }
         if(person.getOpenFees() > 0){
-            System.out.println("Person mit Id" + personId + "kann nicht gelöscht werden, da noch folgende Gebühren offen sind: " + person.getOpenFees());
+            System.out.println("Person mit Id" + personId + "cannot be delete due to the following unpaid: " + person.getOpenFees());
             return;
         }
         persons.remove(person);
@@ -180,7 +183,7 @@ public class LibrarySystem {
         if (bookFilter == null || !bookFilter.hasFilter()) {
             return books;
         }
-
+        //TODO: isDamaged ist hier nicht notwendig da wir ja nur nach Autor, Genre und Titel filtern sollen
         return books.stream()
                 .filter(book -> bookFilter.getGenre() == null || book.getGenre().equalsIgnoreCase(bookFilter.getGenre()))
                 .filter(book -> bookFilter.getAuthor() == null || book.getAuthor().equalsIgnoreCase(bookFilter.getAuthor()))

@@ -93,10 +93,10 @@ public class Person implements Comparable<Person> {
 
     public void removeBorrowedBook(Book book){
         if (book == null) {
-            throw new IllegalArgumentException("Das übergebene Buch darf nicht null sein!");
+            throw new IllegalArgumentException("Book is null!");
         }
         if(!this.borrowedBooks.contains(book)){
-            System.out.println("Das Buch ist nicht in der Liste der ausgeliehen Bücher der Person und kann nicht entfernt werden.");
+            System.out.println("The Book is not part of the list of borrowed books.");
         }
         this.borrowedBooks.remove(book);
     }
@@ -122,16 +122,16 @@ public class Person implements Comparable<Person> {
     @Override
     public String toString() {
         return String.format(
-                "Personendetails:\n" +
-                " Name (Geburtsdatum): %s, %s (%s)\n" +
-                " Adresse: %s\n" +
-                " Ausgeliehene Bücher: %s\n" +
-                " Offene Gebühren: %.2f",
+                "Person details:\n" +
+                " Name (Date of Birth): %s, %s (%s)\n" +
+                " Address: %s\n" +
+                " Borrowed books: %s\n" +
+                " Open fees: %.2f",
                 firstName,
                 lastName,
                 birthDate,
-                address != null ? address.toString() : "Keine Adresse registriert.",
-                borrowedBooks != null ? borrowedBooks.toString() : "Keine Bücher ausgeliehen.",
+                address != null ? address.toString() : "No address registered.",
+                borrowedBooks != null ? borrowedBooks.toString() : "No book borrowed.",
                 openFees);
     }
 
