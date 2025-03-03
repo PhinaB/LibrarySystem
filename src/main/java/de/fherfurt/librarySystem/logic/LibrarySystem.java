@@ -36,6 +36,15 @@ public class LibrarySystem {
         return book;
     }
 
+    public boolean editBook(int bookId, String title, String author, String genre){
+        //TODO Lucas
+        return true;
+    }
+
+    public void deleteBook(Book book) {
+        //TODO Lucas
+    }
+
     public Person addPerson(Person person) {
         if(person==null){
             System.out.println("Person darf nicht null sein.");
@@ -137,6 +146,11 @@ public class LibrarySystem {
                     .filter(person -> personFilter.getBooks() == null || person.getBorrowedBooks().map(books -> books.stream().anyMatch(book -> personFilter.getBooks().contains(book))).orElse(false))
                     .collect(Collectors.toList());
         }
+    }
+
+    public List<Book> filterBooks (BookFilter bookFilter){
+        //TODO Lucas
+        return null;
     }
 
     @Override
