@@ -67,6 +67,11 @@ public class LibrarySystem {
             System.out.println("Das Buch darf nicht null sein.");
             return;
         }
+        if(book.isBorrowed() && borrowBookPersons.containsKey(book.getId())){
+            System.out.println("The book cannot be deleted because it is still borrowed.");
+            return;
+        }
+        books.remove(book);
     }
 
     public Person addPerson(Person person) {
