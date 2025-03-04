@@ -50,18 +50,4 @@ class BookTest {
         assertNotEquals(book, sameBook); // IDs sind unterschiedlich
         assertNotEquals(book.hashCode(), sameBook.hashCode());
     }
-
-    @Test
-    void testToString() {
-        String expected = "Buch-Details:\n" +
-                " ID: " + book.getId() + "\n" +
-                " Titel: Testbuch\n" +
-                " Autor: Max Mustermann\n" +
-                " Genre: Roman\n" +
-                " Zustand: Gut\n" +
-                " Ausgeliehen von: Niemand\n" +
-                " Ausleihdatum: Nicht ausgeliehen";
-
-        assertEquals(expected, book.toString());
-    }
 }

@@ -76,6 +76,9 @@ public class Book implements Comparable<Book> {
     }
 
     public void setDamaged(boolean damaged) {
+        if(isDamaged) {
+            return;
+        }
         isDamaged = damaged;
     }
 

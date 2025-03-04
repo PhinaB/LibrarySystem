@@ -810,7 +810,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testCalculateFeeForBookBookDamaged() {// Was, wenn das Buch vorher schon beschädigt war
+    void testCalculateFeeForBookBookDamaged() {
         // Arrange
         Book book = librarySystem.getBooks().get(0);
         Person person = librarySystem.getPersons().get(0);
