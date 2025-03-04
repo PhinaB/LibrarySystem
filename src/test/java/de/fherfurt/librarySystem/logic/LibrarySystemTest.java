@@ -7,7 +7,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -320,7 +323,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testDeletePerson() {
+    void testDeletePerson() { // TODO: Person hat evtl noch was ausgeliehen -> sie darf nicht gelöscht werden
         // Arrange
         Person testPerson = librarySystem.getPersons().get(0);
 
@@ -751,17 +754,27 @@ class LibrarySystemTest {
     @Test
     void testCalculateFeeForBook() {
         // TODO Lucas
+       /*  LocalDate dueDate = LocalDate.now().minusDays(10);
+
+        double fee = librarySystem.calculateFeeForBook(book, dueDate);
+
+        assertEquals(10 * 0.50, fee, 0.01, "The fee should be 0.50 per day overdue.");*/
         // Arrange
         Book book = librarySystem.getBooks().get(0);
         Person person = librarySystem.getPersons().get(0);
-        librarySystem.borrowBook(book, person);
 
-        LocalDate dueDate = LocalDate.now().minusDays(10);
+        Clock fixedClock = Clock.fixed(Instant.now().minusSeconds(40 * 86400), ZoneId.systemDefault());
 
         // Act
-        double fee = librarySystem.calculateFeeForBook(book, dueDate);
+        librarySystem.borrowBook(book, person);
+
+        // Jetzt wieder zur aktuellen Zeit wechseln
+        Clock normalClock = Clock.systemDefaultZone();
+
+        double fee = librarySystem.calculateFeeForBook(book, false);
+        double expectedFee = Math.ceil(10 / 7.0) * Book.getFeeForOneWeek();
 
         // Assert
-        assertEquals(10 * 0.50, fee, 0.01, "The fee should be 0.50 per day overdue.");
+        assertEquals(expectedFee, fee, "Die Gebühr sollte korrekt berechnet werden");
     }
 }

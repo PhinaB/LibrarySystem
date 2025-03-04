@@ -36,11 +36,11 @@ public class LibrarySystem {
             System.out.println("Book is null.");
             return null;
         }
-        if(book.contains(book)){
+        if(books.contains(book)){
             System.out.println("Book is already in the list.");
             return null;
         }
-        book.add(book);
+        books.add(book);
         return book;
     }
 
