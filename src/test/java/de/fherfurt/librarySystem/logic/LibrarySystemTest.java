@@ -355,8 +355,7 @@ class LibrarySystemTest {
         librarySystem.borrowBook(book, person); // Erst ausleihen
 
         // Act
-        //TODO: bei der Rückgabe musst du noch einen boolean angeben, ob es kaputt ist oder nicht
-        boolean result = librarySystem.gaveBookBack(book, person);
+        boolean result = librarySystem.gaveBookBack(book, person, true);
 
         // Assert
         assertTrue(result, "The book should be successfully returned.");
@@ -759,7 +758,7 @@ class LibrarySystemTest {
         LocalDate dueDate = LocalDate.now().minusDays(10);
 
         // Act
-        double fee = librarySystem.calculateFeeForBook(book, dueDate);
+        double fee = librarySystem.calculateFeeForBook(book, true);
 
         // Assert
         assertEquals(10 * 0.50, fee, 0.01, "The fee should be 0.50 per day overdue.");
