@@ -19,28 +19,25 @@ class LibrarySystemTest {
 
     @BeforeEach
     void setUp() {
-        // TODO Liste persons & books füllen
         librarySystem = new LibrarySystem();
 
-        Address address1 = new Address("Musterstraße", 1, "99999", "Musterhausen", "Musterland");
-        Address address2 = new Address("Mustergasse", 2, "11111", "Mustercity", "Musterland");
+        Address address1 = new Address("model street", 1, "99999", "Model", "Modelland");
+        Address address2 = new Address("model alley", 2, "11111", "Modelcity", "Modelland");
 
-        // TODO: wenn jemand hier was ändert, muss das in den Tests auch geändert werden
-        librarySystem.addPerson(new Person("VornameEins", "NachnameEins", LocalDate.of(2001, 1, 1), address1));
-        librarySystem.addPerson(new Person("VornameZwei", "NachnameZwei", LocalDate.of(2002, 2, 2), address2));
-        librarySystem.addPerson(new Person("VornameDrei", "NachnameDrei", LocalDate.of(2003, 3, 3)));
+        librarySystem.addPerson(new Person("firstNameOne", "lastNameOne", LocalDate.of(2001, 1, 1), address1));
+        librarySystem.addPerson(new Person("firstNameTwo", "lastNameTwo", LocalDate.of(2002, 2, 2), address2));
+        librarySystem.addPerson(new Person("firstNameThree", "lastNameThree", LocalDate.of(2003, 3, 3)));
 
-        librarySystem.addBook(new Book("Test Buch Titel1", "Autor Test1", "Testgenre1", false));
-        librarySystem.addBook(new Book("Test Buch Titel2", "Autor Test2", "Testgenre2", false));
-        librarySystem.addBook(new Book("Test Buch Titel3", "Autor Test3", "Testgenre3", true));
-        librarySystem.addBook(new Book("Test Buch Titel4", "Autor Test4", "Testgenre4", false));
-        librarySystem.addBook(new Book("Test Buch Titel5", "Autor Test5", "Testgenre5", true));
-        librarySystem.addBook(new Book("Test Buch Titel6", "Autor Test6", "Testgenre6", true));
+        librarySystem.addBook(new Book("Test book title1", "Author Test1", "Testgenre1", false));
+        librarySystem.addBook(new Book("Test book title2", "Author Test2", "Testgenre2", false));
+        librarySystem.addBook(new Book("Test book title3", "Author Test3", "Testgenre3", true));
+        librarySystem.addBook(new Book("Test book title4", "Author Test4", "Testgenre4", false));
+        librarySystem.addBook(new Book("Test book title5", "Author Test5", "Testgenre5", true));
+        librarySystem.addBook(new Book("Test book title6", "Author Test6", "Testgenre6", true));
     }
 
     @AfterEach
     void tearDown() {
-        // TODO
         librarySystem = null;
     }
 
@@ -198,13 +195,13 @@ class LibrarySystemTest {
     @Test
     void testAddPerson() {
         // Arrange
-        Person newPerson = new Person("VornameTest", "NachnameTest", LocalDate.of(2001, 1, 1));
+        Person newPerson = new Person("nameTest", "secondNameTest", LocalDate.of(2001, 1, 1));
 
         // Act
         librarySystem.addPerson(newPerson);
 
         // Assert
-        assertTrue(librarySystem.getPersons().contains(newPerson), "Die Person wurde nicht hinzugefügt.");
+        assertTrue(librarySystem.getPersons().contains(newPerson), "The person was not added.");
     }
 
     @Test
@@ -216,28 +213,28 @@ class LibrarySystemTest {
         String newFirstName = "newFirstName";
         String newLastName = "newLastName";
         LocalDate newBirthday = LocalDate.of(2011, 11, 11);
-        Address newAddress = new Address("Nix mit Muster Straße", 111, "12345", "Erfurt", "Deutschland");
+        Address newAddress = new Address("new street name", 111, "12345", "Erfurt", "germany");
 
         // Act
         librarySystem.editPerson(personId, newFirstName, newLastName, newBirthday, newAddress);
 
         // Assert
-        assertEquals(newFirstName, person.getFirstName(), "Vorname stimmt nicht überein.");
-        assertEquals(newLastName, person.getLastName(), "Nachname stimmt nicht überein.");
-        assertEquals(newBirthday, person.getBirthDate(), "Geburtsdatum stimmt nicht überein.");
+        assertEquals(newFirstName, person.getFirstName(), "first name does not match.");
+        assertEquals(newLastName, person.getLastName(), "last name does not match.");
+        assertEquals(newBirthday, person.getBirthDate(), "birthdate does not match.");
 
-        assertTrue(person.getAddress().isPresent(), "Adresse sollte vorhanden sein.");
-        assertEquals(newAddress.getStreet(), person.getAddress().get().getStreet(), "Straße der Adresse stimmt nicht überein.");
-        assertEquals(newAddress.getHouseNumber(), person.getAddress().get().getHouseNumber(), "Hausnummer der Adresse stimmt nicht überein.");
-        assertEquals(newAddress.getPostalCode(), person.getAddress().get().getPostalCode(), "PLZ der Adresse stimmt nicht überein.");
-        assertEquals(newAddress.getCity(), person.getAddress().get().getCity(), "Stadt der Adresse stimmt nicht überein.");
-        assertEquals(newAddress.getCountry(), person.getAddress().get().getCountry(), "Land der Adresse stimmt nicht überein.");
+        assertTrue(person.getAddress().isPresent(), "Address should be present.");
+        assertEquals(newAddress.getStreet(), person.getAddress().get().getStreet(), "street of address does not match.");
+        assertEquals(newAddress.getHouseNumber(), person.getAddress().get().getHouseNumber(), "house number of address does not match.");
+        assertEquals(newAddress.getPostalCode(), person.getAddress().get().getPostalCode(), "PLZ of address does not match.");
+        assertEquals(newAddress.getCity(), person.getAddress().get().getCity(), "city of address does not match.");
+        assertEquals(newAddress.getCountry(), person.getAddress().get().getCountry(), "country of address does not match.");
     }
 
     @Test
     void testEditPersonWithNullValues() {
         // Arrange
-        Person testPerson = new Person("Anna", "Beispiel", LocalDate.of(2000, 6, 10), new Address("Hauptstraße", 2, "11111", "Erfurt", "Deutschland"));
+        Person testPerson = new Person("Anna", "example", LocalDate.of(2000, 6, 10), new Address("Main Street", 2, "11111", "Erfurt", "Germany"));
         librarySystem.addPerson(testPerson);
 
         int personId = testPerson.getId();
@@ -248,22 +245,22 @@ class LibrarySystemTest {
         librarySystem.editPerson(personId, null, newLastName, null, null);
 
         // Assert
-        assertEquals("Anna", testPerson.getFirstName(), "Vorname stimmt nicht überein. Es sollte der vorherige Vorname sein.");
-        assertEquals(newLastName, testPerson.getLastName(), "Nachname stimmt nicht überein.");
-        assertEquals(LocalDate.of(2000, 6, 10), testPerson.getBirthDate(), "Geburtsdatum stimmt nicht überein.");
+        assertEquals("Anna", testPerson.getFirstName(), "first name does not match.");
+        assertEquals(newLastName, testPerson.getLastName(), "last name does not match.");
+        assertEquals(LocalDate.of(2000, 6, 10), testPerson.getBirthDate(), "birthday does not match.");
 
-        assertTrue(testPerson.getAddress().isPresent(), "Adresse sollte vorhanden sein.");
-        assertEquals("Hauptstraße", testPerson.getAddress().get().getStreet(), "Straße der Adresse stimmt nicht überein.");
-        assertEquals(2, testPerson.getAddress().get().getHouseNumber(), "Hausnummer der Adresse stimmt nicht überein.");
-        assertEquals("11111", testPerson.getAddress().get().getPostalCode(), "PLZ der Adresse stimmt nicht überein.");
-        assertEquals("Erfurt", testPerson.getAddress().get().getCity(), "Stadt der Adresse stimmt nicht überein.");
-        assertEquals("Deutschland", testPerson.getAddress().get().getCountry(), "Land der Adresse stimmt nicht überein.");
+        assertTrue(testPerson.getAddress().isPresent(), "Address should be present.");
+        assertEquals("Main Street", testPerson.getAddress().get().getStreet(), "street of address does not match.");
+        assertEquals(2, testPerson.getAddress().get().getHouseNumber(), "house number of address does not match.");
+        assertEquals("11111", testPerson.getAddress().get().getPostalCode(), "PLZ of address does not match.");
+        assertEquals("Erfurt", testPerson.getAddress().get().getCity(), "city of address does not match.");
+        assertEquals("Germany", testPerson.getAddress().get().getCountry(), "country of address does not match.");
     }
 
     @Test
     void testEditPersonWithAllNullValues() {
         // Arrange
-        Person testPerson = new Person("Alice", "Miller", LocalDate.of(1995, 5, 20), new Address("Hauptstraße", 2, "11111", "Erfurt", "Deutschland"));
+        Person testPerson = new Person("Alice", "Miller", LocalDate.of(1995, 5, 20), new Address("Main Street", 2, "11111", "Erfurt", "Germany"));
         librarySystem.addPerson(testPerson);
 
         int personId = testPerson.getId();
@@ -272,16 +269,16 @@ class LibrarySystemTest {
         librarySystem.editPerson(personId, null, null, null, null);
 
         // Assert
-        assertEquals("Alice", testPerson.getFirstName(), "Vorname stimmt nicht überein. Es sollte der vorherige Vorname sein.");
-        assertEquals("Miller", testPerson.getLastName(), "Nachname stimmt nicht überein.");
-        assertEquals(LocalDate.of(1995, 5, 20), testPerson.getBirthDate(), "Geburtsdatum stimmt nicht überein.");
+        assertEquals("Alice", testPerson.getFirstName(), "first name does not match.");
+        assertEquals("Miller", testPerson.getLastName(), "last name does not match.");
+        assertEquals(LocalDate.of(1995, 5, 20), testPerson.getBirthDate(), "birthday does not match.");
 
-        assertTrue(testPerson.getAddress().isPresent(), "Adresse sollte vorhanden sein.");
-        assertEquals("Hauptstraße", testPerson.getAddress().get().getStreet(), "Straße der Adresse stimmt nicht überein.");
-        assertEquals(2, testPerson.getAddress().get().getHouseNumber(), "Hausnummer der Adresse stimmt nicht überein.");
-        assertEquals("11111", testPerson.getAddress().get().getPostalCode(), "PLZ der Adresse stimmt nicht überein.");
-        assertEquals("Erfurt", testPerson.getAddress().get().getCity(), "Stadt der Adresse stimmt nicht überein.");
-        assertEquals("Deutschland", testPerson.getAddress().get().getCountry(), "Land der Adresse stimmt nicht überein.");
+        assertTrue(testPerson.getAddress().isPresent(), "Address should be present.");
+        assertEquals("Main Street", testPerson.getAddress().get().getStreet(), "street of address does not match.");
+        assertEquals(2, testPerson.getAddress().get().getHouseNumber(), "house number of address does not match.");
+        assertEquals("11111", testPerson.getAddress().get().getPostalCode(), "PLZ of address does not match.");
+        assertEquals("Erfurt", testPerson.getAddress().get().getCity(), "city of address does not match.");
+        assertEquals("Germany", testPerson.getAddress().get().getCountry(), "country of address does not match.");
     }
 
     @Test
@@ -292,20 +289,20 @@ class LibrarySystemTest {
         int sizeBefore = librarySystem.getPersons().size();
 
         // Act
-        librarySystem.editPerson(999, "TestVorname", "TestNachname", LocalDate.of(2000, 1, 1), null);
+        librarySystem.editPerson(999, "TestFirstName", "TestLastName", LocalDate.of(2000, 1, 1), null);
 
         // Assert
-        assertEquals(sizeBefore, librarySystem.getPersons().size(), "Die Anzahl der Personen sollte sich nicht ändern.");
-        assertEquals("VornameEins", person.getFirstName(), "Vorname des ersten Eintrags sollte gleich bleiben.");
-        assertEquals("NachnameEins", person.getLastName(), "Vorname des ersten Eintrags sollte gleich bleiben.");
-        assertEquals(LocalDate.of(2001, 1, 1), person.getBirthDate(), "Geburtstag des ersten Eintrags sollte gleich bleiben.");
+        assertEquals(sizeBefore, librarySystem.getPersons().size(), "The number of people should not change.");
+        assertEquals("firstNameOne", person.getFirstName(), "The first name of the first entry should remain the same.");
+        assertEquals("lastNameOne", person.getLastName(), "The last name of the first entry should remain the same.");
+        assertEquals(LocalDate.of(2001, 1, 1), person.getBirthDate(), "Birthdate of the first entry should remain the same.");
 
-        assertTrue(person.getAddress().isPresent(), "Adresse sollte vorhanden sein.");
-        assertEquals("Musterstraße", person.getAddress().get().getStreet(), "Straße der Adresse stimmt nicht überein.");
-        assertEquals(1, person.getAddress().get().getHouseNumber(), "Hausnummer der Adresse stimmt nicht überein.");
-        assertEquals("99999", person.getAddress().get().getPostalCode(), "PLZ der Adresse stimmt nicht überein.");
-        assertEquals("Musterhausen", person.getAddress().get().getCity(), "Stadt der Adresse stimmt nicht überein.");
-        assertEquals("Musterland", person.getAddress().get().getCountry(), "Land der Adresse stimmt nicht überein.");
+        assertTrue(person.getAddress().isPresent(), "Address should be present.");
+        assertEquals("model street", person.getAddress().get().getStreet(), "street of address does not match.");
+        assertEquals(1, person.getAddress().get().getHouseNumber(), "house number of address does not match.");
+        assertEquals("99999", person.getAddress().get().getPostalCode(), "PLZ of address does not match.");
+        assertEquals("Model", person.getAddress().get().getCity(), "city of address does not match.");
+        assertEquals("Modelland", person.getAddress().get().getCountry(), "country of address does not match.");
     }
 
     @Test
@@ -318,8 +315,8 @@ class LibrarySystemTest {
         librarySystem.editPerson(personId, "", "", null, null);
 
         // Assert
-        assertEquals("VornameEins", testPerson.getFirstName(), "Vorname muss gleich bleiben, weil ein leerer String als Vorname nicht erlaubt ist.");
-        assertEquals("NachnameEins", testPerson.getLastName(), "Nachname muss gleich bleiben, weil ein leerer String als Nachname nicht erlaubt ist.");
+        assertEquals("firstNameOne", testPerson.getFirstName(), "First name must remain the same because an empty string is not allowed as a first name.");
+        assertEquals("lastNameOne", testPerson.getLastName(), "Last name must remain the same because an empty string is not allowed as a last name.");
     }
 
     @Test
@@ -331,7 +328,7 @@ class LibrarySystemTest {
         librarySystem.deletePerson(testPerson);
 
         // Assert
-        assertFalse(librarySystem.getPersons().contains(testPerson), "Die Person wurde nicht gelöscht.");
+        assertFalse(librarySystem.getPersons().contains(testPerson), "The person has not been deleted.");
     }
 
     @Test
@@ -434,7 +431,7 @@ class LibrarySystemTest {
         Book book3 = librarySystem.getBooks().get(2);
         //Act
         BookFilter bookFilter = new BookFilter();
-        bookFilter.setTitle("Test Buch Titel1");
+        bookFilter.setTitle("Test Book Title1");
         List<Book> filteredBooks = librarySystem.filterBooks(bookFilter);
         //Assert
         assertEquals(1, filteredBooks.size(), "All books should have been filtered.");
@@ -449,7 +446,7 @@ class LibrarySystemTest {
         Book book1 = librarySystem.getBooks().get(0);
         Book book2 = librarySystem.getBooks().get(1);
         Book book3 = librarySystem.getBooks().get(2);
-        Book book4 = new Book("Title4", "Autor Test2", "Testgenre2", false);
+        Book book4 = new Book("Title4", "Author Test2", "Testgenre2", false);
         //Act
         BookFilter bookFilter = new BookFilter();
         bookFilter.setTitle("Ti");
@@ -490,7 +487,7 @@ class LibrarySystemTest {
         BookFilter bookFilter = new BookFilter();
         List<Book> filteredBooks = librarySystem.filterBooks(bookFilter);
         //Assert
-        assertEquals(0, filteredBooks.size(), "No book should have been filtered becuase no book is in the list.");
+        assertEquals(0, filteredBooks.size(), "No book should have been filtered because no book is in the list.");
     }
 
     @Test
@@ -514,10 +511,10 @@ class LibrarySystemTest {
         List<Person> filteredPersons = librarySystem.filterPersons(personFilter);
 
         // Assert
-        assertEquals(1, filteredPersons.size(), "Es sollte nur eine Person zurückgegeben werden.");
-        assertTrue(filteredPersons.contains(testPerson1), "Person 1 sollte enthalten sein.");
-        assertFalse(filteredPersons.contains(testPerson2), "Person 2 sollte nicht enthalten sein.");
-        assertFalse(filteredPersons.contains(testPerson3), "Person 3 sollte nicht enthalten sein.");
+        assertEquals(1, filteredPersons.size(), "Only one person should be returned.");
+        assertTrue(filteredPersons.contains(testPerson1), "Person 1 should be included.");
+        assertFalse(filteredPersons.contains(testPerson2), "Person 2 should not be included.");
+        assertFalse(filteredPersons.contains(testPerson3), "Person 3 should not be included.");
     }
 
     @Test
@@ -540,10 +537,10 @@ class LibrarySystemTest {
         List<Person> filteredPersons = librarySystem.filterPersons(personFilter);
 
         // Assert
-        assertEquals(0, filteredPersons.size(), "Es sollte keine Person zurückgegeben werden.");
-        assertFalse(filteredPersons.contains(testPerson1), "Person 1 sollte nicht enthalten sein.");
-        assertFalse(filteredPersons.contains(testPerson2), "Person 2 sollte nicht enthalten sein.");
-        assertFalse(filteredPersons.contains(testPerson3), "Person 3 sollte nicht enthalten sein.");
+        assertEquals(0, filteredPersons.size(), "No person should be returned.");
+        assertFalse(filteredPersons.contains(testPerson1), "Person 1 should not be included.");
+        assertFalse(filteredPersons.contains(testPerson2), "Person 2 should not be included.");
+        assertFalse(filteredPersons.contains(testPerson3), "Person 3 should not be included.");
     }
 
     @Test
@@ -564,9 +561,9 @@ class LibrarySystemTest {
         List<Person> filteredPersons = librarySystem.filterPersons(personFilter);
 
         // Assert
-        assertEquals(2, filteredPersons.size(), "Es sollten zwei Personen zurückgegeben werden.");
-        assertTrue(filteredPersons.contains(testPerson1), "Person 1 sollte enthalten sein.");
-        assertTrue(filteredPersons.contains(testPerson2), "Person 2 sollte enthalten sein.");
+        assertEquals(2, filteredPersons.size(), "All two persons should be returned.");
+        assertTrue(filteredPersons.contains(testPerson1), "Person 1 should be included.");
+        assertTrue(filteredPersons.contains(testPerson2), "Person 2 should be included.");
     }
 
     @Test
@@ -586,10 +583,10 @@ class LibrarySystemTest {
         List<Person> filteredPersons = librarySystem.filterPersons(personFilter);
 
         // Assert
-        assertEquals(2, filteredPersons.size(), "Es sollten nur Personen mit offenen Gebühren >= 5.0 zurückgegeben werden.");
-        assertTrue(filteredPersons.contains(testPerson1), "Person 1 sollte enthalten sein.");
-        assertTrue(filteredPersons.contains(testPerson2), "Person 2 sollte enthalten sein.");
-        assertFalse(filteredPersons.contains(testPerson3), "Person 3 sollte nicht enthalten sein.");
+        assertEquals(2, filteredPersons.size(), "Only persons with fees >= 5.0 should be returned.");
+        assertTrue(filteredPersons.contains(testPerson1), "Person 1 should be included.");
+        assertTrue(filteredPersons.contains(testPerson2), "Person 2 should be included.");
+        assertFalse(filteredPersons.contains(testPerson3), "Person 3 should not be included.");
     }
 
     @Test
@@ -609,10 +606,10 @@ class LibrarySystemTest {
         List<Person> filteredPersons = librarySystem.filterPersons(personFilter);
 
         // Assert
-        assertEquals(2, filteredPersons.size(), "Es sollten nur Personen mit offenen Gebühren <= 5.0 zurückgegeben werden.");
-        assertTrue(filteredPersons.contains(testPerson3), "Person 3 sollte enthalten sein.");
-        assertFalse(filteredPersons.contains(testPerson2), "Person 2 sollte nicht enthalten sein.");
-        assertTrue(filteredPersons.contains(testPerson1), "Person 1 sollte enthalten sein.");
+        assertEquals(2, filteredPersons.size(), "Only persons with fees <= 5.0 should be returned.");
+        assertTrue(filteredPersons.contains(testPerson3), "Person 3 should be included.");
+        assertFalse(filteredPersons.contains(testPerson2), "Person 2 should not be included.");
+        assertTrue(filteredPersons.contains(testPerson1), "Person 1 should be included.");
     }
 
     @Test
@@ -642,10 +639,10 @@ class LibrarySystemTest {
         List<Person> filteredPersons = librarySystem.filterPersons(personFilter);
 
         // Assert
-        assertEquals(2, filteredPersons.size(), "Es sollten genau 2 Personen mit mind. 2 Büchern zurückgegeben werden.");
-        assertTrue(filteredPersons.contains(testPerson1), "Person 1 sollte enthalten sein.");
-        assertTrue(filteredPersons.contains(testPerson2), "Person 2 sollte enthalten sein.");
-        assertFalse(filteredPersons.contains(testPerson3), "Person 3 sollte nicht enthalten sein.");
+        assertEquals(2, filteredPersons.size(), "Only two persons with minimum two books should be returned.");
+        assertTrue(filteredPersons.contains(testPerson1), "Person 1 should be included.");
+        assertTrue(filteredPersons.contains(testPerson2), "Person 2 should be included.");
+        assertFalse(filteredPersons.contains(testPerson3), "Person 3 should not be included.");
     }
 
     @Test
@@ -675,10 +672,10 @@ class LibrarySystemTest {
         List<Person> filteredPersons = librarySystem.filterPersons(personFilter);
 
         // Assert
-        assertEquals(2, filteredPersons.size(), "Es sollten genau 2 Personen mit max. 2 Büchern zurückgegeben werden.");
-        assertFalse(filteredPersons.contains(testPerson1), "Person 1 sollte nicht enthalten sein.");
-        assertTrue(filteredPersons.contains(testPerson2), "Person 2 sollte nicht enthalten sein.");
-        assertTrue(filteredPersons.contains(testPerson3), "Person 3 sollte enthalten sein.");
+        assertEquals(2, filteredPersons.size(), "Only two persons with maximum two books should be returned.");
+        assertFalse(filteredPersons.contains(testPerson1), "Person 1 should not be included.");
+        assertTrue(filteredPersons.contains(testPerson2), "Person 2 should not be included.");
+        assertTrue(filteredPersons.contains(testPerson3), "Person 3 should be included.");
     }
 
     @Test
@@ -714,10 +711,10 @@ class LibrarySystemTest {
         List<Person> filteredPersons = librarySystem.filterPersons(personFilter);
 
         // Assert
-        assertEquals(1, filteredPersons.size(), "Es sollte genau 1 Person mit diesen Büchern und diesen Gebühren zurückgegeben werden.");
-        assertTrue(filteredPersons.contains(testPerson1), "Person 1 sollte enthalten sein.");
-        assertFalse(filteredPersons.contains(testPerson2), "Person 2 sollte nicht enthalten sein.");
-        assertFalse(filteredPersons.contains(testPerson3), "Person 3 sollte nicht enthalten sein.");
+        assertEquals(1, filteredPersons.size(), "Only one person with these books and fees should be returned.");
+        assertTrue(filteredPersons.contains(testPerson1), "Person 1 should be included.");
+        assertFalse(filteredPersons.contains(testPerson2), "Person 2 should not be included.");
+        assertFalse(filteredPersons.contains(testPerson3), "Person 3 should not be included.");
     }
 
     @Test
@@ -732,9 +729,9 @@ class LibrarySystemTest {
         List<Person> filteredPersons = librarySystem.filterPersons(personFilter);
 
         // Assert
-        assertEquals(3, filteredPersons.size(), "Es sollte alle Personen zurückgegeben werden, die in dem LibrarySystem enthalten sind.");
-        assertTrue(filteredPersons.contains(testPerson1), "Person 1 sollte enthalten sein.");
-        assertTrue(filteredPersons.contains(testPerson2), "Person 2 sollte enthalten sein.");
+        assertEquals(3, filteredPersons.size(), "All persons that are included in the LibrarySystem should be returned.");
+        assertTrue(filteredPersons.contains(testPerson1), "Person 1 should be included.");
+        assertTrue(filteredPersons.contains(testPerson2), "Person 2 should be included.");
     }
 
     @Test
@@ -748,7 +745,7 @@ class LibrarySystemTest {
         List<Person> filteredPersons = librarySystem.filterPersons(personFilter);
 
         // Assert
-        assertEquals(0, filteredPersons.size(), "Es sollte keine Person zurückgegeben werden.");
+        assertEquals(0, filteredPersons.size(), "No person should be returned.");
     }
 
     @Test

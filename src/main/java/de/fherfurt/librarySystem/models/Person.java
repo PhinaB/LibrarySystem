@@ -84,7 +84,7 @@ public class Person implements Comparable<Person> {
 
     public void addNewBorrowedBook(Book book){
         if (book == null) {
-            throw new IllegalArgumentException("Das übergebene Buch darf nicht null sein!");
+            throw new IllegalArgumentException("Book is null!");
         }
         if (!this.borrowedBooks.contains(book)) {
             this.borrowedBooks.add(book);

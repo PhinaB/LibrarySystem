@@ -91,21 +91,21 @@ public class Book implements Comparable<Book> {
     @Override
     public String toString() {
         return String.format(
-            "Buch-Details:\n" +
+            "book details:\n" +
             " ID: %d\n" +
-            " Titel: %s\n" +
-            " Autor: %s\n" +
-            " Genre: %s\n" +
-            " Zustand: %s\n" +
-            " Ausgeliehen von: %s\n" +
-            " Ausleihdatum: %s",
+            " title: %s\n" +
+            " author: %s\n" +
+            " genre: %s\n" +
+            " damaged: %s\n" +
+            " borrowed by: %s\n" +
+            " loan date: %s",
             id,
             title,
             author,
             genre,
-            isDamaged ? "Beschädigt" : "Gut",
-            personBorrowed != null ? personBorrowed.toString() : "Niemand",
-            borrowDate != null ? borrowDate.toString() : "Nicht ausgeliehen"
+            isDamaged ? "damaged" : "not damaged",
+            personBorrowed != null ? personBorrowed.toString() : "no one",
+            borrowDate != null ? borrowDate.toString() : "not borrowed"
         );
     }
 

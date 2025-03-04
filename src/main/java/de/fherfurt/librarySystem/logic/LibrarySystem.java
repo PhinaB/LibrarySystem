@@ -102,11 +102,11 @@ public class LibrarySystem {
         }
         int personId = person.getId();
         if(borrowBookPersons.containsValue(personId)) {
-            System.out.println("Person with the Id" + personId + "cannot be delete because following books are still borrowed: " + person.getBorrowedBooks().toString());
+            System.out.println("Person with the Id " + personId + " cannot be delete because following books are still borrowed: " + person.getBorrowedBooks().toString());
             return;
         }
         if(person.getOpenFees() > 0){
-            System.out.println("Person mit Id" + personId + "cannot be delete due to the following unpaid: " + person.getOpenFees());
+            System.out.println("Person with Id " + personId + " cannot be delete due to the following unpaid: " + person.getOpenFees());
             return;
         }
         persons.remove(person);
@@ -120,7 +120,7 @@ public class LibrarySystem {
         try {
             person.addNewBorrowedBook(book);
         } catch (IllegalArgumentException e) {
-            System.out.println("Es ist ein Fehler aufgetreten: "+e.getMessage()); // TODO: reicht das so? Oder in Logger schreiben?? Auch bei gaveBookBack
+            System.out.println("An error has occurred: "+e.getMessage()); // TODO: reicht das so? Oder in Logger schreiben?? Auch bei gaveBookBack
             return false;
         }
 
@@ -134,7 +134,7 @@ public class LibrarySystem {
             try {
                 person.removeBorrowedBook(book);
             } catch (IllegalArgumentException e) {
-                System.out.println("Es ist ein Fehler aufgetreten: "+e.getMessage());
+                System.out.println("An error has occurred: "+e.getMessage());
                 return false;
             }
 
@@ -195,9 +195,9 @@ public class LibrarySystem {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Buchverleih System {")
-                .append("ausgeliehene Bücher pro Person =").append(borrowBookPersons)
-                .append(", Personen =[");
+        sb.append("LibrarySystem {")
+                .append("borrowed books by person =").append(borrowBookPersons)
+                .append(", persons =[");
 
         for (Person person : persons) {
             sb.append(person.toString()).append(", ");
@@ -207,7 +207,7 @@ public class LibrarySystem {
             sb.setLength(sb.length() - 2);
         }
 
-        sb.append("], Bücher =[");
+        sb.append("], books =[");
         for (Book book : books) {
             sb.append(book.toString()).append(", ");
         }
