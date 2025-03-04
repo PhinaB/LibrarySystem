@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Person implements Comparable<Person> {
-    private static int idCounter=0;
+    private static int idCounter=1;
     private final int id;
     private String firstName;
     private String lastName;
@@ -123,10 +123,12 @@ public class Person implements Comparable<Person> {
     public String toString() {
         return String.format(
                 "Person details:\n" +
+                " ID: %d\n" +
                 " Name (Date of Birth): %s, %s (%s)\n" +
                 " Address: %s\n" +
                 " Borrowed books: %s\n" +
                 " Open fees: %.2f",
+                id,
                 firstName,
                 lastName,
                 birthDate,

@@ -13,9 +13,9 @@ import java.util.Map;
 import java.util.stream.*;
 
 public class LibrarySystem {
-    private Map<Integer, Integer> borrowBookPersons;
-    private List<Person> persons;
-    private List<Book> books;
+    private final Map<Integer, Integer> borrowBookPersons;
+    private final List<Person> persons;
+    private final List<Book> books;
 
     public LibrarySystem () {
         this.borrowBookPersons = new HashMap<>();
@@ -59,7 +59,7 @@ public class LibrarySystem {
                 return true;
             }
         }
-        return false; // Buch mit der ID wurde nicht gefunden
+        return false;
     }
 
     public void deleteBook(Book book) {
@@ -109,15 +109,15 @@ public class LibrarySystem {
     }
 
     public void deletePerson (Person person) {
-        if(person == null){
+        if(person == null) {
             System.out.println("Person is null.");
         }
         int personId = person.getId();
-        if(borrowBookPersons.containsValue(personId)) {
-            System.out.println("Person with the Id " + personId + " cannot be delete because following books are still borrowed: " + person.getBorrowedBooks().toString());
+        if(borrowBookPersons.containsKey(personId)) {
+            System.out.println("Person with the Id " + personId + " cannot be delete because following books are still borrowed: " + person.getBorrowedBooks());
             return;
         }
-        if(person.getOpenFees() > 0){
+        if(person.getOpenFees() > 0) {
             System.out.println("Person with Id " + personId + " cannot be delete due to the following unpaid: " + person.getOpenFees());
             return;
         }
@@ -132,7 +132,7 @@ public class LibrarySystem {
         try {
             person.addNewBorrowedBook(book);
         } catch (IllegalArgumentException e) {
-            System.out.println("An error has occurred: "+e.getMessage()); // TODO: reicht das so? Oder in Logger schreiben?? Auch bei gaveBookBack
+            System.out.println("An error has occurred: "+e.getMessage());
             return false;
         }
 
@@ -168,7 +168,7 @@ public class LibrarySystem {
         }
 
         int daysLate = (int) ChronoUnit.DAYS.between(book.getBorrowDate().orElse(LocalDate.now()), LocalDate.now());
-        if (daysLate <= 30) { // TODO: anderweitig einen Monat angeben?
+        if (daysLate <= 30) {
             return fee;
         }
 
@@ -210,28 +210,19 @@ public class LibrarySystem {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("LibrarySystem {")
-                .append("borrowed books by person =").append(borrowBookPersons)
-                .append(", persons =[");
+        sb.append("LibrarySystem{")
+                .append(" persons:");
 
         for (Person person : persons) {
-            sb.append(person.toString()).append(", ");
-        }
-        // remove the last comma and space: // TODO: könnte man weg lassen
-        if (!persons.isEmpty()) {
-            sb.setLength(sb.length() - 2);
+            sb.append(person.toString()).append(";\n");
         }
 
-        sb.append("], books =[");
+        sb.append("\n\n books: ");
         for (Book book : books) {
-            sb.append(book.toString()).append(", ");
-        }
-        // remove the last comma and space:
-        if (!books.isEmpty()) {
-            sb.setLength(sb.length() - 2);
+            sb.append(book.toString()).append(";\n");
         }
 
-        sb.append("]}");
+        sb.append("}");
         return sb.toString();
     }
 }
