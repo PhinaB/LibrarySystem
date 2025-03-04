@@ -132,8 +132,8 @@ public class Book implements Comparable<Book> {
             author,
             genre,
             isDamaged ? "damaged" : "not damaged",
-            personBorrowed != null ? personBorrowed.toString() : "no one",
-            borrowDate != null ? borrowDate.toString() : "not borrowed"
+                personBorrowed != null ? personBorrowed.getFirstName() + " " + personBorrowed.getLastName() : "no one",
+                borrowDate != null ? borrowDate.toString() : "not borrowed"
         );
     }
 
