@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Book implements Comparable<Book> {
-    private static int nextId = 1;
+    private static int idCounter = 1;
 
     private final int id;
     private String title;
@@ -24,7 +24,7 @@ public class Book implements Comparable<Book> {
         this.genre = genre;
         this.isDamaged = isDamaged;
 
-        this.id = nextId++;
+        this.id = idCounter++;
     }
 
     public int getId() {
@@ -105,15 +105,17 @@ public class Book implements Comparable<Book> {
     public void setBorrow(Person personBorrowed, LocalDate borrowDate) {
         this.borrowDate = borrowDate;
         this.personBorrowed = personBorrowed;
+        this.isBorrowed = true;
     }
 
     public void removeBorrow() {
         this.personBorrowed = null;
         this.borrowDate = null;
+        this.isBorrowed = false;
     }
 
     public void setBorrowed(boolean borrowed) {
-        isBorrowed = borrowed;
+        this.isBorrowed = borrowed;
     }
 
     @Override
@@ -151,7 +153,7 @@ public class Book implements Comparable<Book> {
     }
 
     @Override
-    public int compareTo(Book o) {
-        return this.title.compareTo(o.title);
+    public int compareTo(Book otherBook) {
+        return this.title.compareTo(otherBook.title);
     }
 }
