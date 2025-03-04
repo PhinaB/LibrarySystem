@@ -21,8 +21,10 @@ public class BookFilter {
         if (book == null) return false;
         return (this.genre == null || this.genre.equalsIgnoreCase(book.getGenre())) &&
                 (this.author == null || this.author.equalsIgnoreCase(book.getAuthor())) &&
-                (this.title == null || book.getTitle().toLowerCase().contains(this.title.toLowerCase()));
+                (this.title == null ||
+                        (book.getTitle() != null && book.getTitle().toLowerCase().contains(this.title.toLowerCase())));
     }
+
 
     public String getTitle() {
         return title;
