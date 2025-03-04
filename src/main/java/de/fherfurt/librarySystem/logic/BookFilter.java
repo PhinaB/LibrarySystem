@@ -15,14 +15,9 @@ public class BookFilter {
         this.genre = genre;
     }
 
-    public boolean hasFilter(Book book) {
-        if (book == null) return false;
-        return (this.genre == null || this.genre.equalsIgnoreCase(book.getGenre())) &&
-                (this.author == null || this.author.equalsIgnoreCase(book.getAuthor())) &&
-                (this.title == null ||
-                        (book.getTitle() != null && book.getTitle().toLowerCase().contains(this.title.toLowerCase())));
+    public boolean hasFilter() {
+        return this.genre != null || this.author != null || this.title != null;
     }
-
 
     public String getTitle() {
         return title;
