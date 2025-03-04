@@ -18,6 +18,8 @@ class BookTest {
         person = new Person("Lisa", "Müller", LocalDate.of(1995, 5, 15));
     }
 
+    // TODO: compareTo, toString testen
+
     @Test
     void testBookInitialization() {
         assertEquals("Testbuch", book.getTitle());

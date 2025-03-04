@@ -120,7 +120,6 @@ class LibrarySystemTest {
     }
 
     @Test
-        //TODO: eventuell nicht nötig?
     void testEditBookNotExistingInList() {
         //Arrange
         Book book = new Book("Title4", "Author4", "Genre4", false);
@@ -216,6 +215,7 @@ class LibrarySystemTest {
     }
 
     // TODO: hinzufügen/bearbeiten von ungültigen Daten: Person gibt ein Geburtsdatum in der Zukunft an
+    // TODO: Person existiert bereits in der Liste
 
     @Test
     void testEditPersonWithAllValuesFilled() {
@@ -389,7 +389,8 @@ class LibrarySystemTest {
         assertFalse(isRemovedPersonFound, "Book should not be in the ArrayList.");
     }
 
-    // TODO: löschen von Personen, die gar nicht im LibrarySystem existieren
+    // TODO: löschen von Personen, die gar nicht im LibrarySystem existieren Stephanie
+    // TODO: person ist null
 
     @Test
     void testBorrowBook() {
@@ -405,8 +406,9 @@ class LibrarySystemTest {
         assertTrue(book.isBorrowed(), "Buch Status sollte true sein.");
     }
 
-    // TODO: testBorrowBook, wenn eine Person oder Buch zugewiesen wird, die nicht im LibrarySystem existiert
-    // TODO: Buch war vorher bereits ausgeliehen
+    // TODO: testBorrowBook, wenn eine Person oder Buch zugewiesen wird, die nicht im LibrarySystem existiert Stephanie
+    // TODO: Buch war vorher bereits ausgeliehen Stephanie
+    // TODO: catch Block testen
 
     @Test
     void testGaveBookBack() {
@@ -425,6 +427,9 @@ class LibrarySystemTest {
 
     // TODO: testGaveBookBack, Person gibt Buch zurück, dass er gar nicht ausgeliehen hat
     // TODO: Buch mit beschädigtem Zustand zurück geben
+    // TODO: catch Block testen
+
+    // TODO toString testen
 
     @Test
     void testFilterBooksWithGenre() {
@@ -874,6 +879,6 @@ class LibrarySystemTest {
         assertEquals(expectedFee, fee, "The fee should not include a damage fee because it was already damaged.");
     }
 
-    // TODO: Bücher werden am gleichen Tag zurück gegeben
-    // TODO: Buch wird nach genau 30 Tagen ohne Schaden zurück gegeben
+    // TODO: Bücher werden am gleichen Tag zurück gegeben Stephanie
+    // TODO: Buch wird nach genau 30 Tagen ohne Schaden zurück gegeben Stephanie
 }
