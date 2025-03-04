@@ -107,7 +107,7 @@ public class Book implements Comparable<Book> {
             " genre: %s\n" +
             " damaged: %s\n" +
             " borrowed by: %s\n" +
-            " loan date: %s",
+            " borrow date: %s",
             id,
             title,
             author,
