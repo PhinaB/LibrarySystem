@@ -393,7 +393,8 @@ class LibrarySystemTest {
         Book book1 = librarySystem.getBooks().get(0);
         Book book2 = librarySystem.getBooks().get(1);
         Book book3 = librarySystem.getBooks().get(2);
-        Book book4 = new Book("Title4", "Autor Test2", "Genre4", false);
+        String author = book2.getAuthor();
+        Book book4 = new Book("Title4", author, "Genre4", false);
         librarySystem.addBook(book4);
         // Act
         BookFilter bookFilter = new BookFilter();
@@ -448,10 +449,13 @@ class LibrarySystemTest {
         Book book1 = librarySystem.getBooks().get(0);
         Book book2 = librarySystem.getBooks().get(1);
         Book book3 = librarySystem.getBooks().get(2);
-        Book book4 = new Book("Title4", "Author Test2", "Testgenre2", false);
+        String author = book2.getAuthor();
+        String genre = book2.getGenre();
+        Book book4 = new Book("TestTitle4", author, genre, false);
+        librarySystem.addBook(book4);
         //Act
         BookFilter bookFilter = new BookFilter();
-        bookFilter.setTitle("Ti");
+        bookFilter.setTitle("Te");
         bookFilter.setGenre(book2.getGenre());
         bookFilter.setAuthor(book2.getAuthor());
         List<Book> filteredBooks = librarySystem.filterBooks(bookFilter);
