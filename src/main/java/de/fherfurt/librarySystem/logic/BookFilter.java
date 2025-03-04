@@ -15,8 +15,6 @@ public class BookFilter {
         this.genre = genre;
     }
 
-    //TODO: die Methode ist noch nicht ganz korrekt. Wie wollen hier nur schauen, ob ein Filter tatsächlich gesetzt wurde.
-    //TODO: siehe auch hasFilter bei PersonFilter
     public boolean hasFilter(Book book) {
         if (book == null) return false;
         return (this.genre == null || this.genre.equalsIgnoreCase(book.getGenre())) &&

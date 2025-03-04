@@ -195,9 +195,11 @@ public class LibrarySystem {
         return books.stream()
                 .filter(book -> bookFilter.getGenre() == null || book.getGenre().equalsIgnoreCase(bookFilter.getGenre()))
                 .filter(book -> bookFilter.getAuthor() == null || book.getAuthor().equalsIgnoreCase(bookFilter.getAuthor()))
-                .filter(book -> bookFilter.getTitle() == null || book.getTitle().contains(bookFilter.getTitle()))
+                .filter(book -> bookFilter.getTitle() == null ||
+                        (book.getTitle() != null && book.getTitle().toLowerCase().contains(bookFilter.getTitle().toLowerCase())))
                 .collect(Collectors.toList());
     }
+
 
 
     @Override
