@@ -132,6 +132,7 @@ public class LibrarySystem {
         }
 
         book.setBorrow(person);
+        book.setBorrowed(true);
         borrowBookPersons.put(person.getId(), book.getId());
         return true;
     }
@@ -147,6 +148,7 @@ public class LibrarySystem {
 
             book.removeBorrow();
             double newFee = this.calculateFeeForBook(book, isNowDamaged);
+            book.setBorrowed(false);
             person.addFee(newFee);
             return true;
         }

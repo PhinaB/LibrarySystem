@@ -12,6 +12,7 @@ public class Book implements Comparable<Book> {
     private String author;
     private String genre;
     private boolean isDamaged;
+    private boolean isBorrowed;
     private Person personBorrowed;
     private LocalDate borrowDate;
     static final double feeForOneWeek = 5.00;
@@ -62,6 +63,10 @@ public class Book implements Comparable<Book> {
         return feeForDamagedBook;
     }
 
+    public boolean isBorrowed() {
+        return isBorrowed;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -86,6 +91,10 @@ public class Book implements Comparable<Book> {
     public void removeBorrow() {
         this.personBorrowed = null;
         this.borrowDate = null;
+    }
+
+    public void setBorrowed(boolean borrowed) {
+        isBorrowed = borrowed;
     }
 
     @Override
@@ -114,12 +123,12 @@ public class Book implements Comparable<Book> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return id == book.id && isDamaged == book.isDamaged && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(genre, book.genre) && Objects.equals(personBorrowed, book.personBorrowed) && Objects.equals(borrowDate, book.borrowDate);
+        return id == book.id && isDamaged == book.isDamaged && isBorrowed == book.isBorrowed && Objects.equals(title, book.title) && Objects.equals(author, book.author) && Objects.equals(genre, book.genre) && Objects.equals(personBorrowed, book.personBorrowed) && Objects.equals(borrowDate, book.borrowDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, author, genre, isDamaged, personBorrowed, borrowDate);
+        return Objects.hash(id, title, author, genre, isDamaged, isBorrowed, personBorrowed, borrowDate);
     }
 
     @Override
