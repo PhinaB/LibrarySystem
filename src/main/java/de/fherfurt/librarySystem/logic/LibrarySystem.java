@@ -32,8 +32,15 @@ public class LibrarySystem {
     }
 
     public Book addBook(Book book) {
-        //TODO: hier noch book auf null prüfen und schauen, ob es bereits in der Liste ist (siehe auch addPerson)
-        books.add(book);
+        if(book==null){
+            System.out.println("Book is null.");
+            return null;
+        }
+        if(book.contains(book)){
+            System.out.println("Book is already in the list.");
+            return null;
+        }
+        book.add(book);
         return book;
     }
 
