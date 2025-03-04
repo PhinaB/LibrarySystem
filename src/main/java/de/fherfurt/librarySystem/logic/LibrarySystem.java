@@ -67,7 +67,7 @@ public class LibrarySystem {
             System.out.println("Das Buch darf nicht null sein.");
             return;
         }
-        if(book.isBorrowed() && borrowBookPersons.containsKey(book.getId())){
+        if(book.isBorrowed() && borrowBookPersons.containsValue(book.getId())){
             System.out.println("The book cannot be deleted because it is still borrowed.");
             return;
         }
@@ -113,7 +113,7 @@ public class LibrarySystem {
             System.out.println("Person is null.");
         }
         int personId = person.getId();
-        if(borrowBookPersons.containsValue(personId)) {
+        if(borrowBookPersons.containsKey(personId)) {
             System.out.println("Person with the Id " + personId + " cannot be delete because following books are still borrowed: " + person.getBorrowedBooks().toString());
             return;
         }
