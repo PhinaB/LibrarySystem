@@ -132,6 +132,7 @@ public class LibrarySystem {
         }
 
         book.setBorrow(person);
+        book.setBorrowed(true);
         borrowBookPersons.put(person.getId(), book.getId());
         return true;
     }
@@ -147,6 +148,7 @@ public class LibrarySystem {
 
             book.removeBorrow();
             double newFee = this.calculateFeeForBook(book, isNowDamaged);
+            book.setBorrowed(false);
             person.addFee(newFee);
             return true;
         }
@@ -190,11 +192,10 @@ public class LibrarySystem {
         if (bookFilter == null || !bookFilter.hasFilter()) {
             return books;
         }
-        //TODO: isDamaged ist hier nicht notwendig da wir ja nur nach Autor, Genre und Titel filtern sollen
         return books.stream()
                 .filter(book -> bookFilter.getGenre() == null || book.getGenre().equalsIgnoreCase(bookFilter.getGenre()))
                 .filter(book -> bookFilter.getAuthor() == null || book.getAuthor().equalsIgnoreCase(bookFilter.getAuthor()))
-                .filter(book -> bookFilter.isDamaged() == null || book.isDamaged() == bookFilter.isDamaged())
+                .filter(book -> bookFilter.getTitle() == null || book.getTitle().contains(bookFilter.getTitle()))
                 .collect(Collectors.toList());
     }
 

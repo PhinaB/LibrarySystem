@@ -358,8 +358,7 @@ class LibrarySystemTest {
         librarySystem.borrowBook(book, person); // Erst ausleihen
 
         // Act
-        //TODO: bei der Rückgabe musst du noch einen boolean angeben, ob es kaputt ist oder nicht
-        boolean result = librarySystem.gaveBookBack(book, person);
+        boolean result = librarySystem.gaveBookBack(book, person, true);
 
         // Assert
         assertTrue(result, "The book should be successfully returned.");
