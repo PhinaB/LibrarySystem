@@ -7,10 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.Clock;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -323,7 +320,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testDeletePerson() { // TODO: Person hat evtl noch was ausgeliehen oder hat offene Gebühren -> sie darf nicht gelöscht werden
+    void testDeletePerson() {
         // Arrange
         Person testPerson = librarySystem.getPersons().get(0);
 
@@ -332,6 +329,34 @@ class LibrarySystemTest {
 
         // Assert
         assertFalse(librarySystem.getPersons().contains(testPerson), "The person has not been deleted.");
+    }
+
+    @Test
+    void testDeletePersonWithFee() {
+        // Arrange
+        Person testPerson = librarySystem.getPersons().get(0);
+        testPerson.addFee(5.0);
+
+        // Act
+        librarySystem.deletePerson(testPerson);
+
+        // Assert
+        assertTrue(librarySystem.getPersons().contains(testPerson), "Person should continue to exist and must not be deleted.");
+    }
+
+    @Test
+    void testDeletePersonWithBorrowedBook() { // TODO: Person hat evtl noch was ausgeliehen oder hat offene Gebühren -> sie darf nicht gelöscht werden
+        // Arrange
+        Person testPerson = librarySystem.getPersons().get(0);
+        Book borrowedBook = librarySystem.getBooks().get(0);
+
+        librarySystem.borrowBook(borrowedBook, testPerson);
+
+        // Act
+        librarySystem.deletePerson(testPerson);
+
+        // Assert
+        assertTrue(librarySystem.getPersons().contains(testPerson), "Person should continue to exist and must not be deleted.");
     }
 
     @Test

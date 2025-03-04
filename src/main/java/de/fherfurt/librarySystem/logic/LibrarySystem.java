@@ -113,7 +113,7 @@ public class LibrarySystem {
             System.out.println("Person is null.");
         }
         int personId = person.getId();
-        if(borrowBookPersons.containsKey(personId)) {
+        if(borrowBookPersons.containsValue(personId)) {
             System.out.println("Person with the Id " + personId + " cannot be delete because following books are still borrowed: " + person.getBorrowedBooks().toString());
             return;
         }
