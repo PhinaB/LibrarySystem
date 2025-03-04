@@ -196,7 +196,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testAddPerson() {
+    void testAddPerson() { // TODO: null Werte hinzufügen
         // Arrange
         Person newPerson = new Person("nameTest", "secondNameTest", LocalDate.of(2001, 1, 1));
 
@@ -323,7 +323,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testDeletePerson() { // TODO: Person hat evtl noch was ausgeliehen -> sie darf nicht gelöscht werden
+    void testDeletePerson() { // TODO: Person hat evtl noch was ausgeliehen oder hat offene Gebühren -> sie darf nicht gelöscht werden
         // Arrange
         Person testPerson = librarySystem.getPersons().get(0);
 
@@ -751,29 +751,64 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testCalculateFeeForBook() {
-        // TODO Lucas
-       /*  LocalDate dueDate = LocalDate.now().minusDays(10);
-
-        double fee = librarySystem.calculateFeeForBook(book, dueDate);
-
-        assertEquals(10 * 0.50, fee, 0.01, "The fee should be 0.50 per day overdue.");*/
+    void testCalculateFeeForBookLessThan30DaysLate() {
         // Arrange
         Book book = librarySystem.getBooks().get(0);
         Person person = librarySystem.getPersons().get(0);
-
-        Clock fixedClock = Clock.fixed(Instant.now().minusSeconds(40 * 86400), ZoneId.systemDefault());
+        book.setBorrow(person, LocalDate.now().minusDays(20));
 
         // Act
-        librarySystem.borrowBook(book, person);
-
-        // Jetzt wieder zur aktuellen Zeit wechseln
-        Clock normalClock = Clock.systemDefaultZone();
-
         double fee = librarySystem.calculateFeeForBook(book, false);
-        double expectedFee = Math.ceil(10 / 7.0) * Book.getFeeForOneWeek();
 
         // Assert
-        assertEquals(expectedFee, fee, "Die Gebühr sollte korrekt berechnet werden");
+        assertEquals(0.0, fee, "There should be no fee.");
+    }
+
+    @Test
+    void testCalculateFeeForBookMoreThan30DaysLate() {
+        // Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person person = librarySystem.getPersons().get(0);
+        book.setBorrow(person, LocalDate.now().minusDays(40));
+
+        // Act
+        double fee = librarySystem.calculateFeeForBook(book, false);
+
+        double expectedFee = Math.ceil(40 / 7.0) * Book.getFeeForOneWeek();
+
+        // Assert
+        assertEquals(expectedFee, fee, "The fee should be calculated correctly.");
+    }
+
+    @Test
+    void testCalculateFeeForBookBookDamaged() {// Was, wenn das Buch vorher schon beschädigt war
+        // Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person person = librarySystem.getPersons().get(0);
+        book.setBorrow(person, LocalDate.now().minusDays(40));
+
+        // Act
+        double fee = librarySystem.calculateFeeForBook(book, true);
+
+        double expectedFee = Book.getFeeForDamagedBook() + Math.ceil(40 / 7.0) * Book.getFeeForOneWeek();
+
+        // Assert
+        assertEquals(expectedFee, fee, "The fee should include the damage fee.");
+    }
+
+    @Test
+    void testCalculateFeeForBookBookAlreadyDamaged() {
+        // Arrange
+        Book book = librarySystem.getBooks().get(2);
+        Person person = librarySystem.getPersons().get(0);
+        book.setBorrow(person, LocalDate.now().minusDays(40));
+
+        // Act
+        double fee = librarySystem.calculateFeeForBook(book, true);
+
+        double expectedFee = Math.ceil(40 / 7.0) * Book.getFeeForOneWeek();
+
+        // Assert
+        assertEquals(expectedFee, fee, "The fee should not include a damage fee because it was already damaged.");
     }
 }
