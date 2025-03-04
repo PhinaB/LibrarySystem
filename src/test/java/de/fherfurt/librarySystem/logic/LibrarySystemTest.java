@@ -43,7 +43,6 @@ class LibrarySystemTest {
 
     @Test
     void testAddBook() {
-        // TODO Josephina
         // Arrange
         librarySystem.getBooks().clear();
         Book book = new Book("Title1", "Author1", "Genre1", false);
@@ -68,7 +67,6 @@ class LibrarySystemTest {
 
     @Test
     void testEditBookWithAllValuesFilled() {
-        // TODO Josephina
         // Arrange
         Book book = librarySystem.getBooks().get(0);
         int bookId = book.getId();
@@ -141,16 +139,17 @@ class LibrarySystemTest {
         assertNotEquals(newGenre, book.getGenre(), "Genre Title should not have changed.");
     }
 
+    // TODO: testEditBook -> wenn jemand leere Strings übergibt: ""
 
     @Test
     void testDeleteBook() {
-        // TODO Josephina
         // Arrange
         Book book = librarySystem.getBooks().get(0);
         int arrayListSizeBeforeDelete = librarySystem.getBooks().size();
+
         // Act
         librarySystem.deleteBook(book);
-        librarySystem.deleteBook(null); //TODO: ist es okay zwei verschiedene Dinge in einem Test zu testen? Hatte Xander in seinem testAddPerson() auch
+        librarySystem.deleteBook(null);
 
         // Assert
         assertEquals(arrayListSizeBeforeDelete - 1, librarySystem.getBooks().size(), "One book was removed, so amount should be one lower that before.");
@@ -193,7 +192,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testAddPerson() { // TODO: null Werte hinzufügen
+    void testAddPerson() {
         // Arrange
         Person newPerson = new Person("nameTest", "secondNameTest", LocalDate.of(2001, 1, 1));
 
@@ -203,6 +202,20 @@ class LibrarySystemTest {
         // Assert
         assertTrue(librarySystem.getPersons().contains(newPerson), "The person was not added.");
     }
+
+    @Test
+    void testAddPersonWithNull() {
+        // Arrange
+        Person newPerson = null;
+
+        // Act
+        librarySystem.addPerson(newPerson);
+
+        // Assert
+        assertFalse(librarySystem.getPersons().contains(newPerson), "A null person should not be added.");
+    }
+
+    // TODO: hinzufügen/bearbeiten von ungültigen Daten: Person gibt ein Geburtsdatum in der Zukunft an
 
     @Test
     void testEditPersonWithAllValuesFilled() {
@@ -345,7 +358,7 @@ class LibrarySystemTest {
     }
 
     @Test
-    void testDeletePersonWithBorrowedBook() { // TODO: Person hat evtl noch was ausgeliehen oder hat offene Gebühren -> sie darf nicht gelöscht werden
+    void testDeletePersonWithBorrowedBook() {
         // Arrange
         Person testPerson = librarySystem.getPersons().get(0);
         Book borrowedBook = librarySystem.getBooks().get(0);
@@ -360,8 +373,26 @@ class LibrarySystemTest {
     }
 
     @Test
+    void testDeletePersonFromEmptyList() {
+        //Arrange
+        librarySystem.getPersons().clear();
+        Person person = new Person("firstNameOne", "lastNameOne", LocalDate.of(2001, 1, 1), null);
+        int arrayListSizeBeforeDelete = librarySystem.getPersons().size();
+
+        //Act
+        librarySystem.deletePerson(person);
+
+        //Assert
+        assertEquals(0, arrayListSizeBeforeDelete, "ArrayList should be empty before removing.");
+        assertEquals(0, librarySystem.getPersons().size(), "Amount of Array should not have changed since ArrayList was empty from the start.");
+        boolean isRemovedPersonFound = librarySystem.getPersons().contains(person);
+        assertFalse(isRemovedPersonFound, "Book should not be in the ArrayList.");
+    }
+
+    // TODO: löschen von Personen, die gar nicht im LibrarySystem existieren
+
+    @Test
     void testBorrowBook() {
-        // TODO Lucas
         // Arrange
         Book book = librarySystem.getBooks().get(0);
         Person person = librarySystem.getPersons().get(0);
@@ -370,17 +401,19 @@ class LibrarySystemTest {
         boolean result = librarySystem.borrowBook(book, person);
 
         // Assert
-        assertTrue(result, "Buch sollte ausgeliehen sien");
+        assertTrue(result, "Buch sollte ausgeliehen sien"); // TODO: englisch
         assertTrue(book.isBorrowed(), "Buch Status sollte true sein.");
     }
 
+    // TODO: testBorrowBook, wenn eine Person oder Buch zugewiesen wird, die nicht im LibrarySystem existiert
+    // TODO: Buch war vorher bereits ausgeliehen
+
     @Test
     void testGaveBookBack() {
-        // TODO Lucas
         // Arrange
         Book book = librarySystem.getBooks().get(0);
         Person person = librarySystem.getPersons().get(0);
-        librarySystem.borrowBook(book, person); // Erst ausleihen
+        librarySystem.borrowBook(book, person);
 
         // Act
         boolean result = librarySystem.gaveBookBack(book, person, true);
@@ -390,9 +423,11 @@ class LibrarySystemTest {
         assertFalse(book.isBorrowed(), "The book's borrowed status should be false.");
     }
 
+    // TODO: testGaveBookBack, Person gibt Buch zurück, dass er gar nicht ausgeliehen hat
+    // TODO: Buch mit beschädigtem Zustand zurück geben
+
     @Test
     void testFilterBooksWithGenre() {
-        // TODO Josephina
         // Arrange
         Book book1 = librarySystem.getBooks().get(0);
         Book book2 = librarySystem.getBooks().get(1);
@@ -413,7 +448,6 @@ class LibrarySystemTest {
 
     @Test
     void testFilterBooksWithAuthor() {
-        // TODO Josephina
         // Arrange
         Book book1 = librarySystem.getBooks().get(0);
         Book book2 = librarySystem.getBooks().get(1);
@@ -494,7 +528,6 @@ class LibrarySystemTest {
 
     @Test
     void testFilterBooksWithNoCriteria() {
-        // TODO Josephina
         // Arrange
         Book book1 = librarySystem.getBooks().get(0);
         Book book2 = librarySystem.getBooks().get(1);
@@ -840,4 +873,7 @@ class LibrarySystemTest {
         // Assert
         assertEquals(expectedFee, fee, "The fee should not include a damage fee because it was already damaged.");
     }
+
+    // TODO: Bücher werden am gleichen Tag zurück gegeben
+    // TODO: Buch wird nach genau 30 Tagen ohne Schaden zurück gegeben
 }
