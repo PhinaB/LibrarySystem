@@ -83,8 +83,24 @@ public class Book implements Comparable<Book> {
         this.genre = genre;
     }
 
+    /**
+     * Sets the book as borrowed and saves the current date as the borrow date.
+     *
+     * @param personBorrowed The person who borrowed the book.
+     */
     public void setBorrow(Person personBorrowed) {
-        this.borrowDate = LocalDate.now();
+        this.setBorrow(personBorrowed, LocalDate.now());
+    }
+
+    /**
+     * Sets the book as borrowed and allows you to set a specific borrowing date.
+     * This method is primarily intended for testing purposes.
+     *
+     * @param personBorrowed The person who borrowed the book.
+     * @param borrowDate     The date on which the book should be marked as borrowed.
+     */
+    public void setBorrow(Person personBorrowed, LocalDate borrowDate) {
+        this.borrowDate = borrowDate;
         this.personBorrowed = personBorrowed;
     }
 
