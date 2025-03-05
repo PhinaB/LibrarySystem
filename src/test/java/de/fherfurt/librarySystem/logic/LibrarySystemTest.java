@@ -512,7 +512,7 @@ class LibrarySystemTest {
         assertTrue(resultBorrow, "The book should be successfully borrowed.");
         assertFalse(resultGaveBookBack, "The returning of the book should not work because the person is not the borrower.");
         assertTrue(librarySystem.getBorrowBookPersons().containsValue(personBorrower.getId()), "The borrower should be in the Map.");
-        assertEquals(book.getId(), librarySystem.getBorrowBookPersons().get(personBorrower.getId()), "The book should be still borrowed by the borrower.");
+        assertEquals(personBorrower.getId(), librarySystem.getBorrowBookPersons().get(book.getId()), "The book should be still borrowed by the borrower.");
     }
 
     @Test
