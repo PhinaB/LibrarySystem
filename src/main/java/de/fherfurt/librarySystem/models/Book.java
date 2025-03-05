@@ -9,7 +9,7 @@ import java.util.Optional;
  * Each book has an ID, title, author, genre, and status attributes such as borrowed or damaged.
  */
 
-public class Book implements Comparable<Book> {
+public class Book implements Comparable<Book>, Cloneable {
     private static int idCounter = 1;
 
     private final int id;
@@ -192,5 +192,24 @@ public class Book implements Comparable<Book> {
     @Override
     public int compareTo(Book otherBook) {
         return this.title.compareTo(otherBook.title);
+    }
+
+    /**
+     * Creates a clone of this book.
+     * The clone is a deep copy of the original book except for the borrowed person reference,
+     * which remains the same to ensure consistency.
+     *
+     * @return a cloned Book object
+     */
+
+    @Override
+    protected Book clone() {
+        try {
+            Book cloned = (Book) super.clone();
+            cloned.borrowDate = (this.borrowDate != null) ? LocalDate.from(this.borrowDate) : null;
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError("Cloning not supported", e);
+        }
     }
 }
