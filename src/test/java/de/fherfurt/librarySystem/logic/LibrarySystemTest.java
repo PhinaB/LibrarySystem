@@ -205,13 +205,27 @@ class LibrarySystemTest {
     @Test
     void testAddPerson() {
         // Arrange
-        Person newPerson = new Person("nameTest", "secondNameTest", LocalDate.of(2001, 1, 1));
-
+        librarySystem.getPersons().clear();
+        Person person = new Person("nameTest", "secondNameTest", LocalDate.of(2001, 1, 1));
+        int listSizeBeforeAdd = librarySystem.getPersons().size();
         // Act
-        librarySystem.addPerson(newPerson);
+        Person resultPersonAdded = librarySystem.addPerson(person);
+        Person resultPersonAddedAnotherTime = librarySystem.addPerson(person);
+        Person resultEmptyPersonAdded = librarySystem.addPerson(null);
 
         // Assert
-        assertTrue(librarySystem.getPersons().contains(newPerson), "The person was not added.");
+        assertNotNull(resultPersonAdded, "Person should be added and should be returned.");
+        assertNull(resultPersonAddedAnotherTime, "Person already exists in  list ans should not be added.");
+        assertNull(resultEmptyPersonAdded, "Person is null, should not be added and null should be returned.");
+        assertEquals(0, listSizeBeforeAdd, "Test should start with an empty list.");
+        assertEquals(listSizeBeforeAdd + 1, librarySystem.getPersons().size(), "One person was added and should be counted.");
+
+        assertTrue(librarySystem.getPersons().contains(person), "The person should be added.");
+
+        Person fetchedPerson = librarySystem.getPersons().get(0);
+        assertNotNull(fetchedPerson, "A person should be found at the first index");
+        assertEquals(person, fetchedPerson, "Added person should be at first index.");
+
     }
 
     @Test
@@ -227,7 +241,6 @@ class LibrarySystemTest {
     }
 
     // TODO: hinzufügen/bearbeiten von ungültigen Daten: Person gibt ein Geburtsdatum in der Zukunft an
-    // TODO: Person existiert bereits in der Liste
 
     @Test
     void testEditPersonWithAllValuesFilled() {
