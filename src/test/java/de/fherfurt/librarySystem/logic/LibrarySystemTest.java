@@ -450,7 +450,24 @@ class LibrarySystemTest {
         assertEquals(firstPerson, book.getPersonBorrowed().orElse(null), "The book should still be assigned to the first borrower.");
     }
 
-    // TODO: catch Block testen
+    @Test
+    void testBorrowBookThrowsException() {
+        // Arrange
+        Book book = librarySystem.getBooks().get(0);
+
+        Person person = new Person("test", "test", LocalDate.of(2000,1,1)) {
+            @Override
+            public void addNewBorrowedBook(Book book) {
+                throw new IllegalArgumentException("Cannot borrow this book");
+            }
+        };
+
+        // Act
+        boolean result = librarySystem.borrowBook(book, person);
+
+        // Assert
+        assertFalse(result, "The method should return false when an exception occurs.");
+    }
 
     @Test
     void testGaveBookBack() {
