@@ -27,16 +27,16 @@ class AddressTest {
         Address address2= new Address(street2, houseNumber2, postalCode2, city2, country2);
 
         //Assert
-        assertEquals(street1, address1.getStreet());
-        assertEquals(houseNumber1, address1.getHouseNumber());
-        assertEquals(postalCode1, address1.getPostalCode());
-        assertEquals(city1, address1.getCity());
-        assertEquals(country1, address1.getCountry());
+        assertEquals(street1, address1.getStreet(), "The street should be the same.");
+        assertEquals(houseNumber1, address1.getHouseNumber(), "The house number should be the same.");
+        assertEquals(postalCode1, address1.getPostalCode(), "The postal code should be the same.");
+        assertEquals(city1, address1.getCity(), "The city should be the same.");
+        assertEquals(country1, address1.getCountry(), "The country should be the same.");
 
-        assertEquals(street2, address2.getStreet());
-        assertEquals(houseNumber2, address2.getHouseNumber());
-        assertEquals(postalCode2, address2.getPostalCode());
-        assertEquals(city2, address2.getCity());
-        assertEquals(country2, address2.getCountry());
+        assertEquals(street2, address2.getStreet(), "The street should be the same.");
+        assertEquals(houseNumber2, address2.getHouseNumber(), "The house number should be the same.");
+        assertEquals(postalCode2, address2.getPostalCode(), "The postal code should be the same.");
+        assertEquals(city2, address2.getCity(), "The city should be the same.");
+        assertEquals(country2, address2.getCountry(), "The country should be the same.");
     }
 }
