@@ -99,7 +99,7 @@ class LibrarySystemTest {
         //Assert
         assertTrue(resultBookEdited, "Book should be edited.");
         assertEquals(newTitle, book.getTitle(), "Book should have new title.");
-        assertEquals("Autor Test1", book.getAuthor(), "Book should have same author as before.");
+        assertEquals("Author Test1", book.getAuthor(), "Book should have same author as before.");
         assertEquals(newGenre, book.getGenre(), "Book should have new genre.");
     }
 
@@ -411,11 +411,22 @@ class LibrarySystemTest {
         assertEquals(0, arrayListSizeBeforeDelete, "ArrayList should be empty before removing.");
         assertEquals(0, librarySystem.getPersons().size(), "Amount of Array should not have changed since ArrayList was empty from the start.");
         boolean isRemovedPersonFound = librarySystem.getPersons().contains(person);
-        assertFalse(isRemovedPersonFound, "Book should not be in the ArrayList.");
+        assertFalse(isRemovedPersonFound, "Person should not be in the ArrayList.");
     }
 
-    // TODO: löschen von Personen, die gar nicht im LibrarySystem existieren Stephanie
-    // TODO: person ist null
+    @Test
+    void testDeletePersonWithNullPerson() {
+        //Arrange
+        librarySystem.getPersons().clear();
+        int arrayListSizeBeforeDelete = librarySystem.getPersons().size();
+
+        //Act
+        librarySystem.deletePerson(null);
+
+        //Assert
+        assertEquals(0, arrayListSizeBeforeDelete, "ArrayList should be empty before removing.");
+        assertEquals(0, librarySystem.getPersons().size(), "Amount of Array should not have changed since ArrayList was empty from the start.");
+    }
 
     @Test
     void testBorrowBook() {
@@ -554,8 +565,6 @@ class LibrarySystemTest {
         assertFalse(resultReturn, "The method should return false when an exception occurs.");
         assertTrue(librarySystem.wasErrorLogged(), "The error flag should be set when an exception occurs.");
     }
-
-    // TODO toString testen
 
     @Test
     void testFilterBooksWithGenre() {

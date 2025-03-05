@@ -116,7 +116,9 @@ public class LibrarySystem {
     public void deletePerson (Person person) {
         if(person == null) {
             System.out.println("Person is null.");
+            return;
         }
+
         int personId = person.getId();
         if(borrowBookPersons.containsValue(personId)) {
             System.out.println("Person with the Id " + personId + " cannot be delete because following books are still borrowed: " + person.getBorrowedBooks());
