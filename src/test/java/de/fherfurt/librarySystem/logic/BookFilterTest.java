@@ -6,14 +6,26 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the {@link BookFilter} class.
+ * This test class ensures that the filtering logic behaves as expected.
+ */
+
 class BookFilterTest {
 
     private BookFilter bookFilter;
-
+    /**
+     * Sets up a new instance of {@link BookFilter} before each test.
+     */
     @BeforeEach
     void setUp() {
         bookFilter = new BookFilter();
     }
+
+    /**
+     * Tests the constructor of {@link BookFilter} to ensure that the provided
+     * title, author, and genre values are correctly assigned.
+     */
 
     @Test
     void testBookFilterConstructor(){
@@ -40,6 +52,10 @@ class BookFilterTest {
         assertEquals(genre2, bookFilter2.getGenre(), "The genre should be the same");
     }
 
+    /**
+     * Tests if {@link BookFilter#hasFilter()} correctly returns false when no filters are set.
+     */
+
     @Test
     void testHasFilterNoFilters() {
         //Act
@@ -47,6 +63,11 @@ class BookFilterTest {
         //Assert
         assertFalse(resultHasFilter, "No filter should be set.");
     }
+
+    /**
+     * Tests if {@link BookFilter#hasFilter()} correctly returns true when the genre filter is set.
+     */
+
     @Test
     void testHasFilterWithGenre() {
         //Arrange
@@ -57,6 +78,10 @@ class BookFilterTest {
         assertTrue(resultHasFilter, "A filter should be set.");
     }
 
+    /**
+     * Tests if {@link BookFilter#hasFilter()} correctly returns true when the author filter is set.
+     */
+
     @Test
     void testHasFilterWithAuthor() {
         //Arrange
@@ -66,6 +91,10 @@ class BookFilterTest {
         //Asert
         assertTrue(resultHasFilter, "A filter should be set.");
     }
+
+    /**
+     * Tests if {@link BookFilter#hasFilter()} correctly returns true when the title filter is set.
+     */
 
     @Test
     void testHasFilterWithTitle() {

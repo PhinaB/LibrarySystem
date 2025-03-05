@@ -8,9 +8,17 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the Book class.
+ */
+
 class BookTest {
     private Book book;
     private Person person;
+
+    /**
+     * Sets up test data before each test.
+     */
 
     @BeforeEach
     void setUp() {
@@ -18,11 +26,19 @@ class BookTest {
         person = new Person("Lisa", "Müller", LocalDate.of(1995, 5, 15));
     }
 
+    /**
+     * Cleans up test data after each test.
+     */
+
     @AfterEach
     void tearDown() {
         person = null;
         book = null;
     }
+
+    /**
+     * Tests the constructor of the Book class.
+     */
 
     @Test
     void testBookConstructor() {
@@ -45,6 +61,10 @@ class BookTest {
         assertEquals(testBook.getId() + 1, anotherBook.getId(), "The ID of the second book should be 1 higher.");
     }
 
+    /**
+     * Tests borrowing a book without a specific date.
+     */
+
     @Test
     void testSetBorrowWithoutSpecificDate() {
         // Arrange
@@ -59,6 +79,10 @@ class BookTest {
         assertTrue(book.getBorrowDate().isPresent(), "The loan date should be set.");
         assertEquals(currentDate, book.getBorrowDate().get(), "The borrowing date should correspond to the current date.");
     }
+
+    /**
+     * Tests borrowing a book with a specific date.
+     */
 
     @Test
     void testSetBorrowWithSpecificDate() {
@@ -75,6 +99,10 @@ class BookTest {
         assertEquals(specificDate, book.getBorrowDate().get(), "The borrowing date should correspond to the specific date.");
     }
 
+    /**
+     * Tests borrowing a book that is already borrowed by another person.
+     */
+
     @Test
     void testSetBorrowWhenBookAlreadyBorrowed() {
         // Arrange
@@ -89,6 +117,7 @@ class BookTest {
         assertEquals(person, book.getPersonBorrowed().get(), "The person borrowed should be the first person.");
         assertNotEquals(secondPerson, book.getPersonBorrowed().get(), "The book should not be loaned to the second person.");
     }
+
 
     @Test
     void testSetBorrowWhenBookAlreadyBorrowedAndDateChanges() {
@@ -115,6 +144,10 @@ class BookTest {
         assertFalse(book.getPersonBorrowed().isPresent(), "The book shouldn't have a borrowed person.");
     }
 
+    /**
+     * Tests removing the borrow status from a book.
+     */
+
     @Test
     void testRemoveBorrow() {
         // Arrange
@@ -140,6 +173,10 @@ class BookTest {
         assertNull(book.getBorrowDate().orElse(null), "The borrow date should be zero.");
     }
 
+    /**
+     * Tests marking a book as damaged.
+     */
+
     @Test
     void testSetDamagedWhenNotDamaged() {
         // Act
@@ -148,6 +185,10 @@ class BookTest {
         // Assert
         assertTrue(book.isDamaged(), "The book should be marked as damaged.");
     }
+
+    /**
+     * Tests setting a book as damaged when it is already marked as damaged.
+     */
 
     @Test
     void testSetDamagedWhenAlreadyDamaged() {

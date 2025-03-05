@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Represents a book in the library system.
+ * Each book has an ID, title, author, genre, and status attributes such as borrowed or damaged.
+ */
+
 public class Book implements Comparable<Book> {
     private static int idCounter = 1;
 
@@ -17,6 +22,15 @@ public class Book implements Comparable<Book> {
     private LocalDate borrowDate;
     static final double feeForOneWeek = 5.00;
     static final double feeForDamagedBook = 10.00;
+
+    /**
+     * Creates a new book with the given attributes.
+     *
+     * @param title     The title of the book.
+     * @param author    The author of the book.
+     * @param genre     The genre of the book.
+     * @param isDamaged Indicates whether the book is damaged.
+     */
 
     public Book(String title, String author, String genre, boolean isDamaged) {
         this.title = title;
@@ -113,6 +127,10 @@ public class Book implements Comparable<Book> {
         }
     }
 
+    /**
+     * Removes the borrow status from the book, making it available again.
+     */
+
     public void removeBorrow() {
         this.personBorrowed = null;
         this.borrowDate = null;
@@ -122,6 +140,12 @@ public class Book implements Comparable<Book> {
     public void setBorrowed(boolean borrowed) {
         this.isBorrowed = borrowed;
     }
+
+    /**
+     * Returns a string representation of the book's details.
+     *
+     * @return A formatted string containing book details.
+     */
 
     @Override
     public String toString() {
@@ -156,6 +180,14 @@ public class Book implements Comparable<Book> {
     public int hashCode() {
         return Objects.hash(id, title, author, genre, isDamaged, isBorrowed, personBorrowed, borrowDate);
     }
+
+    /**
+     * Compares this book to another book based on title.
+     *
+     * @param otherBook The book to compare to.
+     * @return A negative integer, zero, or a positive integer if this book's title
+     *         is less than, equal to, or greater than the other book's title.
+     */
 
     @Override
     public int compareTo(Book otherBook) {
