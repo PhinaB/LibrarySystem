@@ -3,6 +3,8 @@ package de.fherfurt.librarySystem.models;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
+import java.lang.CloneNotSupportedException;
+
 
 /**
  * The Book class represents a book consisting of ID, title, author, genre, isDamaged, isBorrowed, personBorrowed,
@@ -14,7 +16,8 @@ import java.util.Optional;
  * @author  Stephanie Wachs
  * @version 1.0
  */
-public class Book implements Comparable<Book> {
+
+public class Book implements Comparable<Book>, Cloneable {
     private static int idCounter = 1;
 
     private final int id;
@@ -197,5 +200,23 @@ public class Book implements Comparable<Book> {
     @Override
     public int compareTo(Book otherBook) {
         return this.title.compareTo(otherBook.title);
+    }
+
+    /**
+     * Creates a clone of this book.
+     * The clone is a deep copy of the original book except for the borrowed person reference,
+     * which remains the same to ensure consistency.
+     *
+     * @return a cloned Book object
+     */
+    @Override
+    protected Book clone() {
+        try {
+            Book cloned = (Book) super.clone();
+            cloned.borrowDate = (this.borrowDate != null) ? LocalDate.from(this.borrowDate) : null;
+            return cloned;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError("Cloning not supported", e);
+        }
     }
 }
