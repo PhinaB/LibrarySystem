@@ -15,6 +15,8 @@ class BookFilterTest {
         bookFilter = new BookFilter();
     }
 
+    // TODO: Konstruktor testen
+
     @Test
     void testHasFilterNoFilters() {
         //Act

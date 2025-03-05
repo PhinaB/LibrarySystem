@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Person implements Comparable<Person> {
-    private static int idCounter=1;
+    private static int idCounter = 1;
     private final int id;
     private String firstName;
     private String lastName;
@@ -26,7 +26,7 @@ public class Person implements Comparable<Person> {
         this.openFees = 0.0;
     }
 
-    public Person(String firstName, String lastName, LocalDate birthDate){
+    public Person(String firstName, String lastName, LocalDate birthDate) {
         this(firstName, lastName, birthDate, null);
     }
 
@@ -138,7 +138,7 @@ public class Person implements Comparable<Person> {
     }
 
     @Override
-    public int compareTo(Person o) {
-        return Integer.compare(this.id, o.id);
+    public int compareTo(Person otherPerson) {
+        return Integer.compare(this.id, otherPerson.id);
     }
 }

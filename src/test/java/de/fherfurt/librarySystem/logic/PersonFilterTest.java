@@ -16,6 +16,8 @@ class PersonFilterTest {
         personFilter = new PersonFilter();
     }
 
+    // TODO: Konstruktor testen
+
     @Test
     void testHasFilterNoFilters() {
         // Act

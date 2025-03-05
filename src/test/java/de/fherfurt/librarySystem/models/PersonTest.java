@@ -13,6 +13,9 @@ class PersonTest {
     private Book book1;
     private Book book2;
 
+    // TODO: Address Konstruktor testen, equals, toString, hashCode
+    // TODO: dasselbe bei Person
+
     @BeforeEach
     void setUp() {
         person = new Person("Anna", "Test", LocalDate.of(2000, 1, 1));

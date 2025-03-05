@@ -32,11 +32,11 @@ public class LibrarySystem {
     }
 
     public Book addBook(Book book) {
-        if(book==null){
+        if(book==null) {
             System.out.println("Book is null.");
             return null;
         }
-        if(books.contains(book)){
+        if(books.contains(book)) {
             System.out.println("Book is already in the list.");
             return null;
         }
@@ -44,7 +44,7 @@ public class LibrarySystem {
         return book;
     }
 
-    public boolean editBook(int bookId, String title, String author, String genre){
+    public boolean editBook(int bookId, String title, String author, String genre) {
         for (Book book : books) {
             if (book.getId() == bookId) {
                 if (title != null && !title.isBlank()) {
