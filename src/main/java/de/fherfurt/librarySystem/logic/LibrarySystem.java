@@ -12,12 +12,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.*;
 
+/**
+ * The LibrarySystem class manages books, people, and book lending in a library.
+ *
+ * @author Stephanie Wachs, Josephina Burger, Lucas-Manfred Herpe
+ * @version 1.0
+ */
 public class LibrarySystem {
     private final Map<Integer, Integer> borrowBookPersons;
     private final List<Person> persons;
     private final List<Book> books;
     private boolean errorLogged = false;
 
+    /**
+     * Adds a LibrarySystem-Object.
+     */
     public LibrarySystem () {
         this.borrowBookPersons = new HashMap<>();
         this.persons = new ArrayList<>();
@@ -36,6 +45,11 @@ public class LibrarySystem {
         return borrowBookPersons;
     }
 
+    /**
+     *
+     * @param book
+     * @return
+     */
     public Book addBook(Book book) {
         if(book==null) {
             System.out.println("Book is null.");
@@ -49,6 +63,14 @@ public class LibrarySystem {
         return book;
     }
 
+    /**
+     *
+     * @param bookId
+     * @param title
+     * @param author
+     * @param genre
+     * @return
+     */
     public boolean editBook(int bookId, String title, String author, String genre) {
         for (Book book : books) {
             if (book.getId() == bookId) {
@@ -67,6 +89,10 @@ public class LibrarySystem {
         return false;
     }
 
+    /**
+     *
+     * @param book
+     */
     public void deleteBook(Book book) {
         if (book == null) {
             System.out.println("Das Buch darf nicht null sein.");
@@ -79,6 +105,11 @@ public class LibrarySystem {
         books.remove(book);
     }
 
+    /**
+     *
+     * @param person
+     * @return
+     */
     public Person addPerson(Person person) {
         if(person==null){
             System.out.println("Person is null.");
@@ -92,6 +123,15 @@ public class LibrarySystem {
         return person;
     }
 
+    /**
+     *
+     * @param personId
+     * @param firstName
+     * @param lastName
+     * @param birthDate
+     * @param address
+     * @return
+     */
     public boolean editPerson(int personId, String firstName, String lastName, LocalDate birthDate, Address address) {
         for (Person person : persons) {
             if(person.getId() == personId) {
@@ -113,6 +153,10 @@ public class LibrarySystem {
         return false;
     }
 
+    /**
+     *
+     * @param person
+     */
     public void deletePerson (Person person) {
         if(person == null) {
             System.out.println("Person is null.");
@@ -131,6 +175,12 @@ public class LibrarySystem {
         persons.remove(person);
     }
 
+    /**
+     *
+     * @param book
+     * @param person
+     * @return
+     */
     public boolean borrowBook(Book book, Person person) {
         errorLogged = false;
 
@@ -157,6 +207,13 @@ public class LibrarySystem {
         return true;
     }
 
+    /**
+     *
+     * @param book
+     * @param person
+     * @param isNowDamaged
+     * @return
+     */
     public boolean gaveBookBack(Book book, Person person, boolean isNowDamaged) {
         if (borrowBookPersons.containsValue(person.getId()) && borrowBookPersons.get(book.getId()).equals(person.getId())) {
         errorLogged = false;
@@ -181,6 +238,12 @@ public class LibrarySystem {
         return errorLogged;
     }
 
+    /**
+     *
+     * @param book
+     * @param isNowDamaged
+     * @return
+     */
     public double calculateFeeForBook(Book book, boolean isNowDamaged) {
         double fee = 0.0;
         if (isNowDamaged && !book.isDamaged()) {
@@ -199,6 +262,11 @@ public class LibrarySystem {
         return fee;
     }
 
+    /**
+     *
+     * @param personFilter
+     * @return
+     */
     public List<Person> filterPersons(PersonFilter personFilter) {
         if(!personFilter.hasFilter()){
             return persons;
@@ -214,6 +282,11 @@ public class LibrarySystem {
         }
     }
 
+    /**
+     *
+     * @param bookFilter
+     * @return
+     */
     public List<Book> filterBooks(BookFilter bookFilter) {
         if (bookFilter == null || !bookFilter.hasFilter()) {
             return books;
@@ -226,8 +299,11 @@ public class LibrarySystem {
                 .collect(Collectors.toList());
     }
 
-
-
+    /**
+     * Returns a string representation of the LibrarySystem showing the object's key properties - including Books and People.
+     *
+     * @return a String representation of the LibrarySystem
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
