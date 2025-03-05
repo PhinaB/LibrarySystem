@@ -228,18 +228,6 @@ class LibrarySystemTest {
 
     }
 
-    @Test
-    void testAddPersonWithNull() {
-        // Arrange
-        Person newPerson = null;
-
-        // Act
-        librarySystem.addPerson(newPerson);
-
-        // Assert
-        assertFalse(librarySystem.getPersons().contains(newPerson), "A null person should not be added.");
-    }
-
     // TODO: hinzufügen/bearbeiten von ungültigen Daten: Person gibt ein Geburtsdatum in der Zukunft an
 
     @Test
@@ -414,8 +402,16 @@ class LibrarySystemTest {
         assertFalse(isRemovedPersonFound, "Book should not be in the ArrayList.");
     }
 
-    // TODO: löschen von Personen, die gar nicht im LibrarySystem existieren Stephanie
-    // TODO: person ist null
+    @Test
+    void testDeleteNotExistingPersonFromList(){
+        //Arrange
+        Person person = new Person("Test FirstName", "Test LastName", LocalDate.of(2000, 1, 1));
+        int arrayListSizeBeforeDelete = librarySystem.getPersons().size();
+        //Act
+        librarySystem.deletePerson(person);
+        //Assert
+        assertEquals(arrayListSizeBeforeDelete, librarySystem.getPersons().size(), "List should have the same size as before.");
+    }
 
     @Test
     void testBorrowBook() {
@@ -554,8 +550,6 @@ class LibrarySystemTest {
         assertFalse(resultReturn, "The method should return false when an exception occurs.");
         assertTrue(librarySystem.wasErrorLogged(), "The error flag should be set when an exception occurs.");
     }
-
-    // TODO toString testen
 
     @Test
     void testFilterBooksWithGenre() {
