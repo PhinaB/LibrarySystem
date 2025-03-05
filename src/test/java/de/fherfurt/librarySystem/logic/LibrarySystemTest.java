@@ -402,12 +402,42 @@ class LibrarySystemTest {
         boolean result = librarySystem.borrowBook(book, person);
 
         // Assert
-        assertTrue(result, "Buch sollte ausgeliehen sien"); // TODO: englisch
-        assertTrue(book.isBorrowed(), "Buch Status sollte true sein.");
+        assertTrue(result, "Book should be borrowed.");
+        assertTrue(book.isBorrowed(), "Book status should be true.");
     }
 
-    // TODO: testBorrowBook, wenn eine Person oder Buch zugewiesen wird, die nicht im LibrarySystem existiert Stephanie
-    // TODO: Buch war vorher bereits ausgeliehen Stephanie
+    @Test
+    void testBorrowBookWithNonExistentPersonOrBook() {
+        // Arrange
+        Book nonExistentBook = new Book("Non-Existent Book", "Unknown Author", "Unknown Genre", false);
+        Person nonExistentPerson = new Person("Ghost", "Reader", LocalDate.of(2000,2,2));
+
+        // Act
+        boolean resultBook = librarySystem.borrowBook(nonExistentBook, librarySystem.getPersons().get(0));
+        boolean resultPerson = librarySystem.borrowBook(librarySystem.getBooks().get(0), nonExistentPerson);
+
+        // Assert
+        assertFalse(resultBook, "A non-existent book should not be borrowable.");
+        assertFalse(resultPerson, "A non-existent person should not be able to borrow a book.");
+    }
+
+    @Test
+    void testBorrowAlreadyBorrowedBook() {
+        // Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person firstPerson = librarySystem.getPersons().get(0);
+        Person secondPerson = librarySystem.getPersons().get(1);
+
+        librarySystem.borrowBook(book, firstPerson);
+
+        // Act
+        boolean result = librarySystem.borrowBook(book, secondPerson);
+
+        // Assert
+        assertFalse(result, "A book that is already borrowed should not be borrowable by another person.");
+        assertEquals(firstPerson, book.getPersonBorrowed().orElse(null), "The book should still be assigned to the first borrower.");
+    }
+
     // TODO: catch Block testen
 
     @Test
@@ -832,6 +862,20 @@ class LibrarySystemTest {
     }
 
     @Test
+    void testCalculateFeeForBookSameDay() {
+        // Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person person = librarySystem.getPersons().get(0);
+        book.setBorrow(person, LocalDate.now());
+
+        // Act
+        double fee = librarySystem.calculateFeeForBook(book, false);
+
+        // Assert
+        assertEquals(0.0, fee, "There should be no fee.");
+    }
+
+    @Test
     void testCalculateFeeForBookMoreThan30DaysLate() {
         // Arrange
         Book book = librarySystem.getBooks().get(0);
@@ -845,6 +889,20 @@ class LibrarySystemTest {
 
         // Assert
         assertEquals(expectedFee, fee, "The fee should be calculated correctly.");
+    }
+
+    @Test
+    void testCalculateFeeForBookExact30DaysLate() {
+        // Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person person = librarySystem.getPersons().get(0);
+        book.setBorrow(person, LocalDate.now().minusDays(30));
+
+        // Act
+        double fee = librarySystem.calculateFeeForBook(book, false);
+
+        // Assert
+        assertEquals(0.0, fee, "The fee should be calculated correctly.");
     }
 
     @Test
@@ -878,7 +936,4 @@ class LibrarySystemTest {
         // Assert
         assertEquals(expectedFee, fee, "The fee should not include a damage fee because it was already damaged.");
     }
-
-    // TODO: Bücher werden am gleichen Tag zurück gegeben Stephanie
-    // TODO: Buch wird nach genau 30 Tagen ohne Schaden zurück gegeben Stephanie
 }
