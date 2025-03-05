@@ -1,11 +1,9 @@
 package de.fherfurt.librarySystem.logic;
 
-import de.fherfurt.librarySystem.models.Book;
-
 /**
  * The BookFilter class defines filter criteria for searching books in a library system based on title, author and genre.
  *
- * @author Lucas-Manfred Herpe
+ * @author  Lucas-Manfred Herpe
  * @version 1.0
  */
 public class BookFilter {
@@ -18,9 +16,9 @@ public class BookFilter {
     /**
      * Constructor for creating a BookFilter object with specified criteria for title, author, and genre.
      *
-     * @param title the title filter criterion for searching books
-     * @param author the author filter criterion for searching books
-     * @param genre the genre filter criterion for searching books
+     * @param title     the title filter criterion for searching books
+     * @param author    the author filter criterion for searching books
+     * @param genre     the genre filter criterion for searching books
      */
     public BookFilter(String title, String author, String genre) {
         this.title = title;

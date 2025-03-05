@@ -6,7 +6,7 @@ import java.util.Objects;
  * The Address class represents an address consisting of street, house number, postal code, city and country.
  * This class is used to store and retrieve address details for a person.
  *
- * @author Josephina Burger
+ * @author  Josephina Burger
  * @version 1.0
  */
 public class Address {
@@ -19,11 +19,11 @@ public class Address {
     /**
      * Constructor to create a new Address with all fields initialized.
      *
-     * @param street the street of the address
-     * @param houseNumber the house number of the address
-     * @param postalCode the postal code of the address
-     * @param city the city of the address
-     * @param country the country of the address
+     * @param street        the street of the address
+     * @param houseNumber   the house number of the address
+     * @param postalCode    the postal code of the address
+     * @param city          the city of the address
+     * @param country       the country of the address
      */
     public Address(String street, int houseNumber, String postalCode, String city, String country) {
         this.street = street;

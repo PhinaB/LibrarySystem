@@ -15,7 +15,7 @@ import java.util.stream.*;
 /**
  * The LibrarySystem class manages books, people, and book lending in a library.
  *
- * @author Stephanie Wachs, Josephina Burger, Lucas-Manfred Herpe
+ * @author  Stephanie Wachs, Josephina Burger, Lucas-Manfred Herpe
  * @version 1.0
  */
 public class LibrarySystem {
@@ -25,7 +25,7 @@ public class LibrarySystem {
     private boolean errorLogged = false;
 
     /**
-     * Adds a LibrarySystem-Object.
+     * Constructor for creating a LibrarySystem object.
      */
     public LibrarySystem () {
         this.borrowBookPersons = new HashMap<>();
@@ -46,9 +46,10 @@ public class LibrarySystem {
     }
 
     /**
+     * Adds a book to the library system if it is not already present.
      *
-     * @param book
-     * @return
+     * @param book  the book to be added
+     * @return      the added book if successful, or null if the book is null or already exists in the LibrarySystem
      */
     public Book addBook(Book book) {
         if(book==null) {
@@ -64,12 +65,13 @@ public class LibrarySystem {
     }
 
     /**
+     * Updates the details of a book, identified by its ID.
      *
-     * @param bookId
-     * @param title
-     * @param author
-     * @param genre
-     * @return
+     * @param bookId    the ID of the book to edit
+     * @param title     the new title of the book
+     * @param author    the new author of the book
+     * @param genre     the new genre of the book
+     * @return true if the book was found and updated, false otherwise
      */
     public boolean editBook(int bookId, String title, String author, String genre) {
         for (Book book : books) {
@@ -90,8 +92,9 @@ public class LibrarySystem {
     }
 
     /**
+     * Removes a book from the library system if it is not borrowed.
      *
-     * @param book
+     * @param book the book to be removed
      */
     public void deleteBook(Book book) {
         if (book == null) {
@@ -106,9 +109,10 @@ public class LibrarySystem {
     }
 
     /**
+     * Adds a new person to the LibrarySystem.
      *
-     * @param person
-     * @return
+     * @param person    the person to be added
+     * @return          the added person, or null if the person is already in the system or is null
      */
     public Person addPerson(Person person) {
         if(person==null){
@@ -124,13 +128,14 @@ public class LibrarySystem {
     }
 
     /**
+     * Updates the details of a person, identified by their ID.
      *
-     * @param personId
-     * @param firstName
-     * @param lastName
-     * @param birthDate
-     * @param address
-     * @return
+     * @param personId  the ID of the person to edit
+     * @param firstName the new first name
+     * @param lastName  the new last name
+     * @param birthDate the new birthdate
+     * @param address   the new address
+     * @return          true if the person was found and updated, false otherwise
      */
     public boolean editPerson(int personId, String firstName, String lastName, LocalDate birthDate, Address address) {
         for (Person person : persons) {
@@ -154,8 +159,9 @@ public class LibrarySystem {
     }
 
     /**
+     * Removes a person from the system if they have no outstanding fees and no borrowed books.
      *
-     * @param person
+     * @param person the person to be removed
      */
     public void deletePerson (Person person) {
         if(person == null) {
@@ -176,10 +182,11 @@ public class LibrarySystem {
     }
 
     /**
+     * Allows a person to borrow a book if it is available.
      *
-     * @param book
-     * @param person
-     * @return
+     * @param book      the book to be borrowed
+     * @param person    the person borrowing the book
+     * @return          true if the book was successfully borrowed, false otherwise
      */
     public boolean borrowBook(Book book, Person person) {
         errorLogged = false;
@@ -208,11 +215,12 @@ public class LibrarySystem {
     }
 
     /**
+     * Handles the return of a borrowed book and applies fees if necessary.
      *
-     * @param book
-     * @param person
-     * @param isNowDamaged
-     * @return
+     * @param book          the book being returned
+     * @param person        the person returning the book
+     * @param isNowDamaged  true if the book is returned damaged, false otherwise
+     * @return              true if the return was successful, false otherwise
      */
     public boolean gaveBookBack(Book book, Person person, boolean isNowDamaged) {
         if (borrowBookPersons.containsValue(person.getId()) && borrowBookPersons.get(book.getId()).equals(person.getId())) {
@@ -234,15 +242,21 @@ public class LibrarySystem {
         return false;
     }
 
+    /**
+     * Checks if an error was logged during the borrowing or returning process.
+     *
+     * @return true if an error occurred, false otherwise
+     */
     public boolean wasErrorLogged() {
         return errorLogged;
     }
 
     /**
+     * Calculates the late fee for a returned book based on its return date and condition.
      *
-     * @param book
-     * @param isNowDamaged
-     * @return
+     * @param book          the book being returned
+     * @param isNowDamaged  true if the book is now damaged, false otherwise
+     * @return              the calculated fee
      */
     public double calculateFeeForBook(Book book, boolean isNowDamaged) {
         double fee = 0.0;
@@ -263,9 +277,10 @@ public class LibrarySystem {
     }
 
     /**
+     * Filters persons based on the given criteria.
      *
-     * @param personFilter
-     * @return
+     * @param personFilter  the filter containing criteria for filtering persons
+     * @return              a list of persons matching the filter criteria
      */
     public List<Person> filterPersons(PersonFilter personFilter) {
         if(!personFilter.hasFilter()){
@@ -283,9 +298,10 @@ public class LibrarySystem {
     }
 
     /**
+     * Filters books based on the given criteria.
      *
-     * @param bookFilter
-     * @return
+     * @param bookFilter    the filter containing criteria for filtering books
+     * @return              a list of books matching the filter criteria
      */
     public List<Book> filterBooks(BookFilter bookFilter) {
         if (bookFilter == null || !bookFilter.hasFilter()) {
@@ -299,11 +315,6 @@ public class LibrarySystem {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Returns a string representation of the LibrarySystem showing the object's key properties - including Books and People.
-     *
-     * @return a String representation of the LibrarySystem
-     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

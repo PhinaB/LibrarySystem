@@ -1,11 +1,9 @@
 package de.fherfurt.librarySystem.logic;
 
 import de.fherfurt.librarySystem.models.Book;
-import de.fherfurt.librarySystem.models.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 

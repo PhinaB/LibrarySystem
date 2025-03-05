@@ -5,10 +5,15 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * Represents a book in the library system.
- * Each book has an ID, title, author, genre, and status attributes such as borrowed or damaged.
+ * The Book class represents a book consisting of ID, title, author, genre, isDamaged, isBorrowed, personBorrowed,
+ * borrowDate, feeForOneWeek and feeForDamagedBook.
+ * Also implements Comparable and Cloneable.
+ *
+ * @see     Comparable
+ * @see     Cloneable
+ * @author  Stephanie Wachs
+ * @version 1.0
  */
-
 public class Book implements Comparable<Book> {
     private static int idCounter = 1;
 
@@ -25,13 +30,13 @@ public class Book implements Comparable<Book> {
 
     /**
      * Creates a new book with the given attributes.
+     * The book ID is automatically assigned based on a counter.
      *
      * @param title     The title of the book.
      * @param author    The author of the book.
      * @param genre     The genre of the book.
      * @param isDamaged Indicates whether the book is damaged.
      */
-
     public Book(String title, String author, String genre, boolean isDamaged) {
         this.title = title;
         this.author = author;
@@ -89,6 +94,12 @@ public class Book implements Comparable<Book> {
         this.author = author;
     }
 
+    /**
+     * Sets the damage status of the book.
+     * If the book is already marked as damaged, the method does nothing.
+     *
+     * @param damaged A boolean indicating whether the book should be marked as damaged.
+     */
     public void setDamaged(boolean damaged) {
         if(isDamaged) {
             return;
@@ -103,17 +114,17 @@ public class Book implements Comparable<Book> {
     /**
      * Sets the book as borrowed and saves the current date as the borrow date.
      *
-     * @param personBorrowed The person who borrowed the book.
+     * @param personBorrowed The person who is borrowing the book.
      */
     public void setBorrow(Person personBorrowed) {
         this.setBorrow(personBorrowed, LocalDate.now());
     }
 
     /**
-     * Sets the book as borrowed and allows you to set a specific borrowing date.
-     * This method is primarily intended for testing purposes.
+     * Marks the book as borrowed and sets a specific borrow date.
+     * This method allows setting a custom borrow date, and is primarily intended for testing purposes.
      *
-     * @param personBorrowed The person who borrowed the book.
+     * @param personBorrowed The person who is borrowing the book.
      * @param borrowDate     The date on which the book should be marked as borrowed.
      */
     public void setBorrow(Person personBorrowed, LocalDate borrowDate) {
@@ -128,9 +139,9 @@ public class Book implements Comparable<Book> {
     }
 
     /**
-     * Removes the borrow status from the book, making it available again.
+     * Removes the borrow status from the book, making it available again for borrowing.
+     * Resets the borrow date and the person who borrowed the book.
      */
-
     public void removeBorrow() {
         this.personBorrowed = null;
         this.borrowDate = null;
@@ -140,12 +151,6 @@ public class Book implements Comparable<Book> {
     public void setBorrowed(boolean borrowed) {
         this.isBorrowed = borrowed;
     }
-
-    /**
-     * Returns a string representation of the book's details.
-     *
-     * @return A formatted string containing book details.
-     */
 
     @Override
     public String toString() {
@@ -183,12 +188,12 @@ public class Book implements Comparable<Book> {
 
     /**
      * Compares this book to another book based on title.
+     * The comparison is case-sensitive and follows the lexicographical order of the titles.
      *
      * @param otherBook The book to compare to.
-     * @return A negative integer, zero, or a positive integer if this book's title
-     *         is less than, equal to, or greater than the other book's title.
+     * @return          A negative integer, zero, or a positive integer if this book's title
+     *                  is less than, equal to, or greater than the other book's title.
      */
-
     @Override
     public int compareTo(Book otherBook) {
         return this.title.compareTo(otherBook.title);

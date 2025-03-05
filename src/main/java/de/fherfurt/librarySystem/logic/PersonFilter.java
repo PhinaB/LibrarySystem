@@ -2,15 +2,13 @@ package de.fherfurt.librarySystem.logic;
 
 import de.fherfurt.librarySystem.models.Book;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * The PersonFilter class defines filter criteria for searching people in a library system based on
  * borrowed books, outstanding fees, and the number of borrowed books.
  *
- * @author Josephina Burger
+ * @author  Josephina Burger
  * @version 1.0
  */
 public class PersonFilter {
@@ -28,11 +26,11 @@ public class PersonFilter {
      * Constructor for creating a PersonFilter object with specified criteria for borrowed books,
      * minimum and maximum outstanding fees, and the minimum and maximum number of borrowed books.
      *
-     * @param books the list of books to filter by
-     * @param minOpenFees the minimum outstanding fees to filter by
-     * @param maxOpenFees the maximum outstanding fees to filter by
-     * @param minBooksBorrowed the minimum number of borrowed books to filter by
-     * @param maxBooksBorrowed the maximum number of borrowed books to filter by
+     * @param books             the list of books to filter by
+     * @param minOpenFees       the minimum outstanding fees to filter by
+     * @param maxOpenFees       the maximum outstanding fees to filter by
+     * @param minBooksBorrowed  the minimum number of borrowed books to filter by
+     * @param maxBooksBorrowed  the maximum number of borrowed books to filter by
      */
     public PersonFilter(List<Book> books, double minOpenFees, double maxOpenFees, int minBooksBorrowed, int maxBooksBorrowed) {
         this.books = books;
@@ -88,7 +86,7 @@ public class PersonFilter {
      *  @return true if at least one filter criterion is set (books, open fees, or borrowed books),
      *  false if no criteria are set
      */
-    public boolean hasFilter(){
+    public boolean hasFilter() {
         return (books != null && !books.isEmpty()) ||
                 minOpenFees > 0.0 ||
                 maxOpenFees > 0.0 ||

@@ -10,11 +10,11 @@ import java.lang.CloneNotSupportedException;
 /**
  * The Person class represents a person consisting of ID, first name, last name, birthdate, address,
  * borrowed books and open fees.
- * Also implements Comparable and Clonable.
+ * Also implements Comparable and Cloneable.
  *
- * @see Comparable
- * @see Cloneable
- * @author Josephina Burger
+ * @see     Comparable
+ * @see     Cloneable
+ * @author  Josephina Burger
  * @version 1.0
  */
 public class Person implements Comparable<Person>, Cloneable {
@@ -30,11 +30,12 @@ public class Person implements Comparable<Person>, Cloneable {
 
     /**
      * Constructor to create a new Person with all fields initialized.
+     * The book ID is automatically assigned based on a counter.
      *
      * @param firstName the first name of the person
-     * @param lastName the last name of the person
+     * @param lastName  the last name of the person
      * @param birthDate the birthdate of the person
-     * @param address the address of the person
+     * @param address   the address of the person
      */
     public Person(String firstName, String lastName, LocalDate birthDate, Address address) {
         this.id = idCounter++;
@@ -50,7 +51,7 @@ public class Person implements Comparable<Person>, Cloneable {
      * Constructor to create a new Person without an address.
      *
      * @param firstName the first name of the person
-     * @param lastName the last name of the person
+     * @param lastName  the last name of the person
      * @param birthDate the birthdate of the person
      */
     public Person(String firstName, String lastName, LocalDate birthDate) {
@@ -169,6 +170,13 @@ public class Person implements Comparable<Person>, Cloneable {
         return Objects.hash(id, firstName, lastName, birthDate, address, borrowedBooks, openFees);
     }
 
+    /**
+     * Compares this person to another person based on their unique identifier (ID).
+     *
+     * @param otherPerson   The person to compare this person with.
+     * @return              A negative integer, zero, or a positive integer if this person's ID
+     *                      is less than, equal to, or greater than the other person's ID.
+     */
     @Override
     public int compareTo(Person otherPerson) {
         return Integer.compare(this.id, otherPerson.id);

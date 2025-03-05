@@ -225,10 +225,7 @@ class LibrarySystemTest {
         Person fetchedPerson = librarySystem.getPersons().get(0);
         assertNotNull(fetchedPerson, "A person should be found at the first index");
         assertEquals(person, fetchedPerson, "Added person should be at first index.");
-
     }
-
-    // TODO: hinzufügen/bearbeiten von ungültigen Daten: Person gibt ein Geburtsdatum in der Zukunft an
 
     @Test
     void testEditPersonWithAllValuesFilled() {
