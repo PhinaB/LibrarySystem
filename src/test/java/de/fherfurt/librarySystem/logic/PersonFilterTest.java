@@ -1,9 +1,12 @@
 package de.fherfurt.librarySystem.logic;
 
 import de.fherfurt.librarySystem.models.Book;
+import de.fherfurt.librarySystem.models.Person;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +19,28 @@ class PersonFilterTest {
         personFilter = new PersonFilter();
     }
 
-    // TODO: Konstruktor testen
+    @Test
+    void testPersonFilterConstructor() {
+        // Arrange
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(new Book("a", "a", "a", false));
+        bookList.add(new Book("b", "b", "b", false));
+
+        double minOpenFees = 5.0;
+        double maxOpenFees = 10.0;
+        int minBooksBorrowed = 2;
+        int maxBooksBorrowed = 8;
+
+        // Act
+        PersonFilter personFilter1 = new PersonFilter(bookList, minOpenFees, maxOpenFees, minBooksBorrowed, maxBooksBorrowed);
+
+        // Assert
+        assertEquals(bookList, personFilter1.getBooks(), "Books list should be correctly set.");
+        assertEquals(minOpenFees, personFilter1.getMinOpenFees(), "Min open fees should be correctly set.");
+        assertEquals(maxOpenFees, personFilter1.getMaxOpenFees(), "Max open fees should be correctly set.");
+        assertEquals(minBooksBorrowed, personFilter1.getMinBooksBorrowed(), "Min books borrowed should be correctly set.");
+        assertEquals(maxBooksBorrowed, personFilter1.getMaxBooksBorrowed(), "Max books borrowed should be correctly set.");
+    }
 
     @Test
     void testHasFilterNoFilters() {

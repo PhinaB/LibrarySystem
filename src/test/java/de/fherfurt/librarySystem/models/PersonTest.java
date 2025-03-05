@@ -30,8 +30,8 @@ class PersonTest {
     @Test
     void testPersonConstructor() {
         // Arrange
-        String expectedFirstName = "";
-        String expectedLastName = "";
+        String expectedFirstName = "b";
+        String expectedLastName = "b";
         LocalDate expectedBirthDate = LocalDate.of(2000, 1, 1);
         Address expectedAddress = new Address("street", 2, "12345", "Erfurt", "Germany");
 
@@ -51,8 +51,8 @@ class PersonTest {
     @Test
     void testPersonConstructorWithoutAddress() {
         // Arrange
-        String expectedFirstName = "";
-        String expectedLastName = "";
+        String expectedFirstName = "a";
+        String expectedLastName = "a";
         LocalDate expectedBirthDate = LocalDate.of(2000, 1, 1);
 
         // Act
