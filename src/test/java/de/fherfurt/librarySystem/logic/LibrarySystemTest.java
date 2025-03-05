@@ -113,9 +113,23 @@ class LibrarySystemTest {
         boolean resultBookEdited = librarySystem.editBook(bookId, null, null, null);
 
         //Assert
-        assertTrue(resultBookEdited, "Book should be edited but with no values changed.");//TODO: Kommt auf die Implementierung an
-        assertEquals("Test Buch Titel1", book.getTitle(), "Book should have same title as before.");
-        assertEquals("Autor Test1", book.getAuthor(), "Book should have same author as before.");
+        assertTrue(resultBookEdited, "Book should be edited but with no values changed.");
+        assertEquals("Test book title1", book.getTitle(), "Book should have same title as before.");
+        assertEquals("Author Test1", book.getAuthor(), "Book should have same author as before.");
+        assertEquals("Testgenre1", book.getGenre(), "Book should have same genre as before.");
+    }
+
+    @Test
+    void testEditBookWithEmptyString(){
+        //Arrange
+        Book book = librarySystem.getBooks().get(0);
+        int bookId = book.getId();
+        //Act
+        boolean resultBookEdited = librarySystem.editBook(bookId, "", "author1", "");
+        //Assert
+        assertTrue(resultBookEdited, "Book should be edited.");
+        assertEquals("Test book title1", book.getTitle(), "Book should have same title as before.");
+        assertEquals("author1", book.getAuthor(), "Book should have different author than before.");
         assertEquals("Testgenre1", book.getGenre(), "Book should have same genre as before.");
     }
 
@@ -137,8 +151,6 @@ class LibrarySystemTest {
         assertNotEquals(newAuthor, book.getAuthor(), "Book Title should not have changed.");
         assertNotEquals(newGenre, book.getGenre(), "Genre Title should not have changed.");
     }
-
-    // TODO: testEditBook -> wenn jemand leere Strings übergibt: "" Phina
 
     @Test
     void testDeleteBook() {
@@ -424,12 +436,48 @@ class LibrarySystemTest {
         assertTrue(result, "The book should be successfully returned.");
         assertFalse(book.isBorrowed(), "The book's borrowed status should be false.");
     }
+    @Test
+    void testGaveBookBackPersonNotBorrower(){
+        //Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person personBorrower = librarySystem.getPersons().get(0);
+        Person personNotBorrower= librarySystem.getPersons().get(1);
+        //Act
+        boolean resultBorrow = librarySystem.borrowBook(book, personBorrower);
+        boolean resultGaveBookBack = librarySystem.gaveBookBack(book, personNotBorrower, false);
+        //Assert
+        assertTrue(resultBorrow, "The book should be successfully borrowed.");
+        assertFalse(resultGaveBookBack, "The returning of the book should not work because the person is not the borrower.");
+        assertTrue(librarySystem.getBorrowBookPersons().containsValue(personBorrower.getId()), "The borrower should be in the Map.");
+        assertEquals(book.getId(), librarySystem.getBorrowBookPersons().get(personBorrower.getId()), "The book should be still borrowed by the borrower.");
+    }
 
-    // TODO: testGaveBookBack, Person gibt Buch zurück, dass er gar nicht ausgeliehen hat Phina
-    // TODO: Buch mit beschädigtem Zustand zurück geben Phina
-    // TODO: testGaveBookBack, Person gibt Buch zurück, dass er gar nicht ausgeliehen hat
-    // TODO: Buch mit beschädigtem Zustand zurück geben
+    @Test
+    void testGaveBookBackWithDamage(){
+        //Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person person = librarySystem.getPersons().get(0);
+        double personFeeBefore = person.getOpenFees();
+        //Act
+        boolean resultBorrow = librarySystem.borrowBook(book, person);
+        boolean resultGaveBookBack = librarySystem.gaveBookBack(book, person, true);
+        //Assert
+        assertTrue(resultBorrow, "The book should be successfully borrowed.");
+        assertTrue(resultGaveBookBack, "The book should be successfully returned.");
+        assertTrue(book.isDamaged(), "The book should be damaged.");
+        assertTrue(personFeeBefore < person.getOpenFees(), "The fee of the person should have increased.");
+    }
+
     // TODO: catch Block testen
+    @Test
+    void testGaveBookCatchBlock() {
+        //Arrange
+        Book book = librarySystem.getBooks().get(0);
+        Person personBorrower = librarySystem.getPersons().get(0);
+        Person personNotBorrower = librarySystem.getPersons().get(1);
+
+      
+    }
 
     // TODO toString testen
 

@@ -31,6 +31,10 @@ public class LibrarySystem {
         return books;
     }
 
+    public Map<Integer, Integer> getBorrowBookPersons() {
+        return borrowBookPersons;
+    }
+
     public Book addBook(Book book) {
         if(book==null) {
             System.out.println("Book is null.");
@@ -67,7 +71,7 @@ public class LibrarySystem {
             System.out.println("Das Buch darf nicht null sein.");
             return;
         }
-        if(book.isBorrowed() && borrowBookPersons.containsValue(book.getId())){
+        if(book.isBorrowed() && borrowBookPersons.containsKey(book.getId())){
             System.out.println("The book cannot be deleted because it is still borrowed.");
             return;
         }
@@ -113,7 +117,7 @@ public class LibrarySystem {
             System.out.println("Person is null.");
         }
         int personId = person.getId();
-        if(borrowBookPersons.containsKey(personId)) {
+        if(borrowBookPersons.containsValue(personId)) {
             System.out.println("Person with the Id " + personId + " cannot be delete because following books are still borrowed: " + person.getBorrowedBooks());
             return;
         }
@@ -125,7 +129,7 @@ public class LibrarySystem {
     }
 
     public boolean borrowBook(Book book, Person person) {
-        if (borrowBookPersons.containsValue(book.getId())) {
+        if (borrowBookPersons.containsKey(book.getId())) {
             return false;
         }
 
@@ -138,12 +142,12 @@ public class LibrarySystem {
 
         book.setBorrow(person);
         book.setBorrowed(true);
-        borrowBookPersons.put(person.getId(), book.getId());
+        borrowBookPersons.put(book.getId(), person.getId());
         return true;
     }
 
     public boolean gaveBookBack(Book book, Person person, boolean isNowDamaged) {
-        if (borrowBookPersons.containsKey(person.getId()) && borrowBookPersons.get(person.getId()).equals(book.getId())) {
+        if (borrowBookPersons.containsValue(person.getId()) && borrowBookPersons.get(person.getId()).equals(book.getId())) {
             try {
                 person.removeBorrowedBook(book);
             } catch (IllegalArgumentException e) {
