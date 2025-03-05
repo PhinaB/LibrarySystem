@@ -103,9 +103,14 @@ public class Book implements Comparable<Book> {
      * @param borrowDate     The date on which the book should be marked as borrowed.
      */
     public void setBorrow(Person personBorrowed, LocalDate borrowDate) {
-        this.borrowDate = borrowDate;
-        this.personBorrowed = personBorrowed;
-        this.isBorrowed = true;
+        if (personBorrowed == null) {
+            return;
+        }
+        if (this.personBorrowed == null && !this.isBorrowed) {
+            this.borrowDate = borrowDate;
+            this.personBorrowed = personBorrowed;
+            this.isBorrowed = true;
+        }
     }
 
     public void removeBorrow() {
