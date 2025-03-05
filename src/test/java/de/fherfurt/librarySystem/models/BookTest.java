@@ -1,5 +1,6 @@
 package de.fherfurt.librarySystem.models;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,12 @@ class BookTest {
     void setUp() {
         book = new Book("Testbuch", "Max Mustermann", "Roman", false);
         person = new Person("Lisa", "Müller", LocalDate.of(1995, 5, 15));
+    }
+
+    @AfterEach
+    void tearDown() {
+        person = null;
+        book = null;
     }
 
     @Test

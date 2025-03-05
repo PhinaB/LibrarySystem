@@ -79,6 +79,9 @@ public class Person implements Comparable<Person> {
     }
 
     public void addFee(double newFee){
+        if (newFee < 0) {
+            throw new IllegalArgumentException("Gebühr darf nicht negativ sein.");
+        }
         this.openFees += newFee;
     }
 
@@ -99,10 +102,6 @@ public class Person implements Comparable<Person> {
             System.out.println("The Book is not part of the list of borrowed books.");
         }
         this.borrowedBooks.remove(book);
-    }
-
-    public int countBorrowedBooks() {
-        return borrowedBooks.size();
     }
 
     @Override

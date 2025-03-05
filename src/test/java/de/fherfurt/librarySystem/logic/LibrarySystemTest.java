@@ -99,7 +99,7 @@ class LibrarySystemTest {
         //Assert
         assertTrue(resultBookEdited, "Book should be edited.");
         assertEquals(newTitle, book.getTitle(), "Book should have new title.");
-        assertEquals("Autor Test1", book.getAuthor(), "Book should have same author as before.");
+        assertEquals("Author Test1", book.getAuthor(), "Book should have same author as before.");
         assertEquals(newGenre, book.getGenre(), "Book should have new genre.");
     }
 
@@ -399,18 +399,21 @@ class LibrarySystemTest {
         assertEquals(0, arrayListSizeBeforeDelete, "ArrayList should be empty before removing.");
         assertEquals(0, librarySystem.getPersons().size(), "Amount of Array should not have changed since ArrayList was empty from the start.");
         boolean isRemovedPersonFound = librarySystem.getPersons().contains(person);
-        assertFalse(isRemovedPersonFound, "Book should not be in the ArrayList.");
+        assertFalse(isRemovedPersonFound, "Person should not be in the ArrayList.");
     }
 
     @Test
-    void testDeleteNotExistingPersonFromList(){
+    void testDeletePersonWithNullPerson() {
         //Arrange
-        Person person = new Person("Test FirstName", "Test LastName", LocalDate.of(2000, 1, 1));
+        librarySystem.getPersons().clear();
         int arrayListSizeBeforeDelete = librarySystem.getPersons().size();
+
         //Act
-        librarySystem.deletePerson(person);
+        librarySystem.deletePerson(null);
+
         //Assert
-        assertEquals(arrayListSizeBeforeDelete, librarySystem.getPersons().size(), "List should have the same size as before.");
+        assertEquals(0, arrayListSizeBeforeDelete, "ArrayList should be empty before removing.");
+        assertEquals(0, librarySystem.getPersons().size(), "Amount of Array should not have changed since ArrayList was empty from the start.");
     }
 
     @Test
