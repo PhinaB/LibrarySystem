@@ -205,8 +205,8 @@ public class LibrarySystem {
             return persons.stream()
                     .filter(person -> personFilter.getMinOpenFees() == 0.0 || person.getOpenFees() >= personFilter.getMinOpenFees())
                     .filter(person -> personFilter.getMaxOpenFees() == 0.0 || person.getOpenFees() <= personFilter.getMaxOpenFees())
-                    .filter(person -> personFilter.getMinBooksBorrowed() == 0 || person.countBorrowedBooks() >= personFilter.getMinBooksBorrowed())
-                    .filter(person -> personFilter.getMaxBooksBorrowed() == 0 || person.countBorrowedBooks() <= personFilter.getMaxBooksBorrowed())
+                    .filter(person -> personFilter.getMinBooksBorrowed() == 0 || person.getBorrowedBooks().size() >= personFilter.getMinBooksBorrowed())
+                    .filter(person -> personFilter.getMaxBooksBorrowed() == 0 || person.getBorrowedBooks().size() <= personFilter.getMaxBooksBorrowed())
                     .filter(person -> personFilter.getBooks() == null || person.getBorrowedBooks().stream().anyMatch(book -> personFilter.getBooks().contains(book)))
                     .collect(Collectors.toList());
         }
