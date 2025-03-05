@@ -130,6 +130,8 @@ public class LibrarySystem {
     }
 
     public boolean borrowBook(Book book, Person person) {
+        errorLogged = false;
+
         if (!books.contains(book)) {
             return false;
         }
@@ -154,6 +156,8 @@ public class LibrarySystem {
     }
 
     public boolean gaveBookBack(Book book, Person person, boolean isNowDamaged) {
+        errorLogged = false;
+
         if (borrowBookPersons.containsValue(person.getId()) && borrowBookPersons.get(person.getId()).equals(book.getId())) {
             try {
                 person.removeBorrowedBook(book);
