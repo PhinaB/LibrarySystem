@@ -125,7 +125,13 @@ public class LibrarySystem {
     }
 
     public boolean borrowBook(Book book, Person person) {
-        if (borrowBookPersons.containsValue(book.getId())) {
+        if (!books.contains(book)) {
+            return false;
+        }
+        if (!persons.contains(person)) {
+            return false;
+        }
+        if (borrowBookPersons.containsKey(book.getId())) {
             return false;
         }
 
@@ -137,8 +143,7 @@ public class LibrarySystem {
         }
 
         book.setBorrow(person);
-        book.setBorrowed(true);
-        borrowBookPersons.put(person.getId(), book.getId());
+        borrowBookPersons.put(book.getId(), person.getId());
         return true;
     }
 
