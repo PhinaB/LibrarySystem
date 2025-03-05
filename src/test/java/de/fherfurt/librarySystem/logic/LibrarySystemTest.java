@@ -518,7 +518,6 @@ class LibrarySystemTest {
         assertTrue(personFeeBefore < person.getOpenFees(), "The fee of the person should have increased.");
     }
 
-    // TODO: catch Block testen
     @Test
     void testGaveBookthrowsException() {
         //Arrange
