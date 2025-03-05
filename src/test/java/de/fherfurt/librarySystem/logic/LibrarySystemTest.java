@@ -462,11 +462,14 @@ class LibrarySystemTest {
             }
         };
 
+        librarySystem.addPerson(person);
+
         // Act
         boolean result = librarySystem.borrowBook(book, person);
 
         // Assert
         assertFalse(result, "The method should return false when an exception occurs.");
+        assertTrue(librarySystem.wasErrorLogged(), "The error flag should be set when an exception occurs.");
     }
 
     @Test

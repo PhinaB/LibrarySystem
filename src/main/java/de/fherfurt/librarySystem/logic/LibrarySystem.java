@@ -16,6 +16,7 @@ public class LibrarySystem {
     private final Map<Integer, Integer> borrowBookPersons;
     private final List<Person> persons;
     private final List<Book> books;
+    private boolean errorLogged = false;
 
     public LibrarySystem () {
         this.borrowBookPersons = new HashMap<>();
@@ -142,6 +143,7 @@ public class LibrarySystem {
         try {
             person.addNewBorrowedBook(book);
         } catch (IllegalArgumentException e) {
+            errorLogged = true;
             System.out.println("An error has occurred: "+e.getMessage());
             return false;
         }
@@ -156,6 +158,7 @@ public class LibrarySystem {
             try {
                 person.removeBorrowedBook(book);
             } catch (IllegalArgumentException e) {
+                errorLogged = true;
                 System.out.println("An error has occurred: "+e.getMessage());
                 return false;
             }
@@ -167,6 +170,10 @@ public class LibrarySystem {
             return true;
         }
         return false;
+    }
+
+    public boolean wasErrorLogged() {
+        return errorLogged;
     }
 
     public double calculateFeeForBook(Book book, boolean isNowDamaged) {
