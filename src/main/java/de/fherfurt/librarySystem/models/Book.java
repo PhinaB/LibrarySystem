@@ -3,6 +3,8 @@ package de.fherfurt.librarySystem.models;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
+import java.lang.CloneNotSupportedException;
+
 
 /**
  * Represents a book in the library system.
