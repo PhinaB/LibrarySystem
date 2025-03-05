@@ -120,7 +120,6 @@ class LibrarySystemTest {
     }
 
     @Test
-        //TODO: eventuell nicht nötig?
     void testEditBookNotExistingInList() {
         //Arrange
         Book book = new Book("Title4", "Author4", "Genre4", false);
@@ -139,7 +138,7 @@ class LibrarySystemTest {
         assertNotEquals(newGenre, book.getGenre(), "Genre Title should not have changed.");
     }
 
-    // TODO: testEditBook -> wenn jemand leere Strings übergibt: ""
+    // TODO: testEditBook -> wenn jemand leere Strings übergibt: "" Phina
 
     @Test
     void testDeleteBook() {
@@ -423,8 +422,8 @@ class LibrarySystemTest {
         assertFalse(book.isBorrowed(), "The book's borrowed status should be false.");
     }
 
-    // TODO: testGaveBookBack, Person gibt Buch zurück, dass er gar nicht ausgeliehen hat
-    // TODO: Buch mit beschädigtem Zustand zurück geben
+    // TODO: testGaveBookBack, Person gibt Buch zurück, dass er gar nicht ausgeliehen hat Phina
+    // TODO: Buch mit beschädigtem Zustand zurück geben Phina
 
     @Test
     void testFilterBooksWithGenre() {
