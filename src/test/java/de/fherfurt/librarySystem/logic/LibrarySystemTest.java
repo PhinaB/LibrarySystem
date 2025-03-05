@@ -520,13 +520,26 @@ class LibrarySystemTest {
 
     // TODO: catch Block testen
     @Test
-    void testGaveBookCatchBlock() {
+    void testGaveBookthrowsException() {
         //Arrange
         Book book = librarySystem.getBooks().get(0);
-        Person personBorrower = librarySystem.getPersons().get(0);
-        Person personNotBorrower = librarySystem.getPersons().get(1);
 
-      
+        Person person = new Person ("test", "test", LocalDate.of(2000,1,1)) {
+            @Override
+            public void removeBorrowedBook(Book book) {
+                throw new IllegalArgumentException("Cannot remove this book");
+            }
+        };
+        librarySystem.addPerson(person);
+
+        //Act
+        boolean resultBorrow = librarySystem.borrowBook(book, person);
+        boolean resultReturn = librarySystem.gaveBookBack(book, person, false);
+
+        //Assert
+        assertTrue(resultBorrow, "The book should be successfully borrowed.");
+        assertFalse(resultReturn, "The method should return false when an exception occurs.");
+        assertTrue(librarySystem.wasErrorLogged(), "The error flag should be set when an exception occurs.");
     }
 
     // TODO toString testen

@@ -154,7 +154,7 @@ public class LibrarySystem {
     }
 
     public boolean gaveBookBack(Book book, Person person, boolean isNowDamaged) {
-        if (borrowBookPersons.containsValue(person.getId()) && borrowBookPersons.get(person.getId()).equals(book.getId())) {
+        if (borrowBookPersons.containsValue(person.getId()) && borrowBookPersons.get(book.getId()).equals(person.getId())) {
             try {
                 person.removeBorrowedBook(book);
             } catch (IllegalArgumentException e) {
