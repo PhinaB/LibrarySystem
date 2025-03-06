@@ -202,6 +202,12 @@ public class Book implements Comparable<Book>, Cloneable {
         return this.title.compareTo(otherBook.title);
     }
 
+    /**
+     * Creates a clone of this book.
+     * The clone is a shallow copy of the original book.
+     *
+     * @return a cloned Book object
+     */
     @Override
     protected Book clone() throws CloneNotSupportedException {
         return (Book) super.clone();

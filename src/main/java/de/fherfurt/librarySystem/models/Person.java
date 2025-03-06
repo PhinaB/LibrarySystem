@@ -181,6 +181,12 @@ public class Person implements Comparable<Person>, Cloneable {
         return Integer.compare(this.id, otherPerson.id);
     }
 
+    /**
+     * Creates a clone of this person.
+     * The clone is a shallow copy of the original person.
+     *
+     * @return a cloned Person object
+     */
     @Override
     protected Person clone() throws CloneNotSupportedException {
         return (Person) super.clone();
