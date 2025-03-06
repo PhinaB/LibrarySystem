@@ -31,7 +31,7 @@ This project is completed and has been fully implemented.
 If you have any questions or problems, please contact Stephanie Wachs, Josephina Burger
 or Lucas-Manfred Herpe.
 
-## Team Members
+## Team Members (Group: tierheimat)
 
 *   Stephanie Wachs
 *   Josephina Burger
