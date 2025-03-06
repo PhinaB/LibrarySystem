@@ -16,5 +16,14 @@ public class Main {
         Person person1 = new Person("Hans", "W", LocalDate.of(2000, 2, 2));
         Person person2 = new Person("Marie", "K", LocalDate.of(2001,1,1));
 
+        System.out.println(librarySystem);
+
+        librarySystem.addPerson(person1);
+        librarySystem.addPerson(person2);
+        librarySystem.addBook(book1);
+        librarySystem.addBook(book2);
+
+        System.out.println(librarySystem);
+
     }
 }

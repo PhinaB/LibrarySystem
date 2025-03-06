@@ -320,18 +320,26 @@ public class LibrarySystem {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("LibrarySystem{")
-                .append(" persons:");
+          .append(" persons:");
 
-        for (Person person : persons) {
-            sb.append(person.toString()).append(";\n");
+        if (persons.isEmpty()) {
+            sb.append(" No people registered.");
+        } else {
+            for (Person person : persons) {
+                sb.append("  ").append(person.toString()).append(";\n\n");
+            }
         }
 
         sb.append("\n\n books: ");
-        for (Book book : books) {
-            sb.append(book.toString()).append(";\n");
+        if (books.isEmpty()) {
+            sb.append(" No books in inventory.");
+        } else {
+            for (Book book : books) {
+                sb.append("  ").append(book.toString()).append(";\n\n"); // Zeilenumbrüche für mehr Übersicht
+            }
         }
 
-        sb.append("}");
+        sb.append("}\n");
         return sb.toString();
     }
 }
