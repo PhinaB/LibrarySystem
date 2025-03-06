@@ -190,7 +190,10 @@ public class Book implements Comparable<Book>, Cloneable {
     }
 
     /**
-     * Compares this book to another book based on their unique identifier (ID).
+     * Compares this book to another book based on title, author and their unique identifier (ID).
+     * If titles are different, they are compared alphabetically.
+     * If titles are the same, authors are compared alphabetically.
+     * If both are the same, IDs are compared numerically.
      *
      * @param otherBook The book to compare to.
      * @return          A negative integer, zero, or a positive integer if this book's title
@@ -198,6 +201,16 @@ public class Book implements Comparable<Book>, Cloneable {
      */
     @Override
     public int compareTo(Book otherBook) {
+        int titleComparison = this.title.compareTo(otherBook.title);
+        if (titleComparison != 0) {
+            return titleComparison;
+        }
+
+        int authorComparison = this.author.compareTo(otherBook.author);
+        if (authorComparison != 0) {
+            return authorComparison;
+        }
+
         return Integer.compare(this.id, otherBook.id);
     }
 

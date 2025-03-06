@@ -170,7 +170,11 @@ public class Person implements Comparable<Person>, Cloneable {
     }
 
     /**
-     * Compares this person to another person based on their unique identifier (ID).
+     * Compares this person to another person based on last name, first name, and birthDate.
+     * The comparison is performed in the following order:
+     * - Last names are compared alphabetically.
+     * - If the last names are the same, first names are compared alphabetically.
+     * - If both names are the same, birthDates are compared chronologically.
      *
      * @param otherPerson   The person to compare this person with.
      * @return              A negative integer, zero, or a positive integer if this person's ID
@@ -178,7 +182,17 @@ public class Person implements Comparable<Person>, Cloneable {
      */
     @Override
     public int compareTo(Person otherPerson) {
-        return Integer.compare(this.id, otherPerson.id);
+        int lastNameComparison = this.lastName.compareTo(otherPerson.lastName);
+        if (lastNameComparison != 0) {
+            return lastNameComparison;
+        }
+
+        int firstNameComparison = this.firstName.compareTo(otherPerson.firstName);
+        if (firstNameComparison != 0) {
+            return firstNameComparison;
+        }
+
+        return this.birthDate.compareTo(otherPerson.birthDate);
     }
 
     /**
