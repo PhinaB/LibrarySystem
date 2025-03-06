@@ -190,8 +190,7 @@ public class Book implements Comparable<Book>, Cloneable {
     }
 
     /**
-     * Compares this book to another book based on title.
-     * The comparison is case-sensitive and follows the lexicographical order of the titles.
+     * Compares this book to another book based on their unique identifier (ID).
      *
      * @param otherBook The book to compare to.
      * @return          A negative integer, zero, or a positive integer if this book's title
@@ -199,7 +198,7 @@ public class Book implements Comparable<Book>, Cloneable {
      */
     @Override
     public int compareTo(Book otherBook) {
-        return this.title.compareTo(otherBook.title);
+        return Integer.compare(this.id, otherBook.id);
     }
 
     @Override
