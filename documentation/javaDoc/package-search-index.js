@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"Alle Packages","u":"allpackages-index.html"},{"l":"de.fherfurt.librarySystem"},{"l":"de.fherfurt.librarySystem.logic"},{"l":"de.fherfurt.librarySystem.models"}];updateSearchResults();
