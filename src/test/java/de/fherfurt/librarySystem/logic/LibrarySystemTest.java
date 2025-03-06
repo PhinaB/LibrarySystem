@@ -85,6 +85,21 @@ class LibrarySystemTest {
     }
 
     @Test
+    void testEditBookWithOnlyAuthor(){
+        // Arrange
+        Book book = librarySystem.getBooks().get(0);
+        int bookId = book.getId();
+
+        String newAuthor = "new Author1";
+
+        // Act
+        librarySystem.editBook(bookId, null, newAuthor, null);
+
+        //Assert
+        assertEquals(newAuthor, book.getAuthor(), "Book should have new author.");
+    }
+
+    @Test
     void testEditBookWithNullValuesFilled() {
         //Arrange
         Book book = librarySystem.getBooks().get(0);

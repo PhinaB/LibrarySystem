@@ -202,21 +202,8 @@ public class Book implements Comparable<Book>, Cloneable {
         return this.title.compareTo(otherBook.title);
     }
 
-    /**
-     * Creates a clone of this book.
-     * The clone is a deep copy of the original book except for the borrowed person reference,
-     * which remains the same to ensure consistency.
-     *
-     * @return a cloned Book object
-     */
     @Override
-    protected Book clone() {
-        try {
-            Book cloned = (Book) super.clone();
-            cloned.borrowDate = (this.borrowDate != null) ? LocalDate.from(this.borrowDate) : null;
-            return cloned;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError("Cloning not supported", e);
-        }
+    protected Book clone() throws CloneNotSupportedException {
+        return (Book) super.clone();
     }
 }

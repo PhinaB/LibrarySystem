@@ -183,12 +183,7 @@ public class Person implements Comparable<Person>, Cloneable {
 
     @Override
     protected Person clone() throws CloneNotSupportedException {
-        try{
-            return (Person) super.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return (Person) super.clone();
     }
 
     @Override
